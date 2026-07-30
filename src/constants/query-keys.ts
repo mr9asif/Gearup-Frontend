@@ -11,7 +11,5 @@ export const QUERY_KEYS = {
 
   REVIEWS: ["reviews"],
 
-  PROVIDER_ORDERS: ["provider-orders"],
-
   USERS: ["users"],
 } as const;

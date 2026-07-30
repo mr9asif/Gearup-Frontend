@@ -5,6 +5,7 @@ import "./globals.css";
 
 import { Toaster } from "@/components/ui/sonner";
 import { metadata as siteMetadata } from "@/config/site";
+import { AuthInitializer } from "@/features/auth/components/auth-initializer";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body className={geist.className}>
         <ThemeProvider>
           <ReactQueryProvider>
+            <AuthInitializer />
             {children}
 
             <Toaster position="top-right" richColors />

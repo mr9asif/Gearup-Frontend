@@ -1,15 +1,15 @@
-function getEnv(name: string): string {
-  const value = process.env[name];
+const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME;
 
-  if (!value) {
-    throw new Error(`Missing environment variable: ${name}`);
-  }
+if (!API_URL) {
+  throw new Error("Missing environment variable: NEXT_PUBLIC_API_BASE_URL");
+}
 
-  return value;
+if (!APP_NAME) {
+  throw new Error("Missing environment variable: NEXT_PUBLIC_APP_NAME");
 }
 
 export const env = {
-  API_URL: getEnv("NEXT_PUBLIC_API_BASE_URL"),
-
-  APP_NAME: getEnv("NEXT_PUBLIC_APP_NAME"),
-};
+  API_URL,
+  APP_NAME,
+} as const;
