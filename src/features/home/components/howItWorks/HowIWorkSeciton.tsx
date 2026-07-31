@@ -2,10 +2,10 @@
 
 import { motion } from "framer-motion";
 
+import { howItWorksSteps } from "./how-it-works";
+import { MobileTimelineStep } from "./MobiletimeLineStep";
 import { SectionHeader } from "./SectionHeader";
 import { TimelineStep } from "./TimelineStep";
-import { howItWorksSteps } from "./how-it-works";
-
 
 export function HowItWorksSection() {
   return (
@@ -13,7 +13,6 @@ export function HowItWorksSection() {
       {/* ================= Background ================= */}
 
       <div className="absolute inset-0 -z-10">
-
         {/* Left Glow */}
         <div className="absolute left-0 top-32 h-72 w-72 rounded-full bg-primary/10 blur-[120px]" />
 
@@ -35,7 +34,6 @@ export function HowItWorksSection() {
       {/* ================= Timeline ================= */}
 
       <div className="relative mx-auto max-w-6xl">
-
         {/* Center Animated Line */}
 
         <motion.div
@@ -49,14 +47,28 @@ export function HowItWorksSection() {
           className="absolute left-1/2 top-0 hidden h-full w-[3px] -translate-x-1/2 origin-top rounded-full bg-gradient-to-b from-primary/30 via-primary to-primary/30 lg:block"
         />
 
-        {howItWorksSteps.map((step, index) => (
-          <TimelineStep
-            key={step.id}
-            step={step}
-            reverse={index % 2 !== 0}
-            isLast={index === howItWorksSteps.length - 1}
-          />
-        ))}
+        {/* Desktop Timeline */}
+        <div className="hidden lg:block">
+          {howItWorksSteps.map((step, index) => (
+            <TimelineStep
+              key={step.id}
+              step={step}
+              reverse={index % 2 !== 0}
+              isLast={index === howItWorksSteps.length - 1}
+            />
+          ))}
+        </div>
+
+        {/* Mobile Timeline */}
+        <div className="space-y-2 lg:hidden">
+          {howItWorksSteps.map((step, index) => (
+            <MobileTimelineStep
+              key={step.id}
+              step={step}
+              isLast={index === howItWorksSteps.length - 1}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -18,23 +18,27 @@ export function StepCard({
   return (
     <div className="relative">
       {!isLast && (
-        <ArrowRight className="absolute -right-8 top-14 hidden h-8 w-8 text-muted-foreground/30 xl:block" />
+        <ArrowRight className="absolute -right-4 top-10 hidden h-5 w-5 text-muted-foreground/30 lg:-right-8 lg:top-14 lg:h-8 lg:w-8 xl:block" />
       )}
 
-      <div className="group relative h-full rounded-3xl border bg-background/70 p-8 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-primary/30 hover:shadow-2xl">
+      <div className="group relative h-full rounded-xl border bg-background/70 p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-xl sm:p-5 lg:rounded-3xl lg:p-8 lg:hover:-translate-y-2 lg:hover:shadow-2xl">
         {/* Number */}
-        <div className="absolute right-6 top-6 flex h-10 w-10 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
+        <div className="absolute right-4 top-4 flex h-7 w-7 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground sm:h-8 sm:w-8 sm:text-xs lg:right-6 lg:top-6 lg:h-10 lg:w-10 lg:text-sm">
           {number}
         </div>
 
         {/* Icon */}
-        <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-all duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-white">
-          <Icon className="h-8 w-8" />
+        <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary transition-all duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-white sm:h-12 sm:w-12 lg:mb-8 lg:h-16 lg:w-16 lg:rounded-2xl">
+          <Icon className="h-5 w-5 sm:h-6 sm:w-6 lg:h-8 lg:w-8" />
         </div>
 
-        <h3 className="text-2xl font-semibold">{title}</h3>
+        <h3 className="text-base font-semibold leading-snug sm:text-lg lg:text-2xl">
+          {title}
+        </h3>
 
-        <p className="mt-4 leading-7 text-muted-foreground">{description}</p>
+        <p className="mt-2 text-xs leading-5 text-muted-foreground sm:text-sm sm:leading-6 lg:mt-4 lg:leading-7">
+          {description}
+        </p>
       </div>
     </div>
   );
