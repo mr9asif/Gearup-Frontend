@@ -26,6 +26,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <ThemeProvider>
           <ReactQueryProvider>
             <AuthInitializer />
+
             {children}
 
             <Toaster position="top-right" richColors />

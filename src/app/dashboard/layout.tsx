@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
+import { Navbar } from "@/shared/layout/navbar";
 import { useAuthStore } from "@/store/auth.store";
 
 export default function DashboardLayout({
@@ -33,5 +34,10 @@ export default function DashboardLayout({
     return null;
   }
 
-  return <>{children}</>;
+  return (
+    <>
+      <Navbar />
+      {children}
+    </>
+  );
 }
