@@ -9,6 +9,7 @@ import { useAuthStore } from "@/store/auth.store";
 export const useCurrentUser = () => {
   const setLoading = useAuthStore((state) => state.setLoading);
   const setUser = useAuthStore((state) => state.setUser);
+  const logout = useAuthStore((state) => state.logout);
 
   return useQuery({
     queryKey: QUERY_KEYS.CURRENT_USER,
@@ -22,12 +23,16 @@ export const useCurrentUser = () => {
         setUser(response.data);
 
         return response.data;
+      } catch (error) {
+        logout(); // Clear user when /me returns 401 (or any error)
+
+        throw error;
       } finally {
         setLoading(false);
       }
     },
-    retry: false,
 
+    retry: false,
     refetchOnWindowFocus: false,
   });
 };

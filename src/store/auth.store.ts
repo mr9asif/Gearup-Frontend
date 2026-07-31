@@ -21,5 +21,6 @@ export const useAuthStore = create<AuthState>((set) => ({
   logout: () =>
     set({
       user: null,
+      isLoading: false,
     }),
 }));
