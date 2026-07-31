@@ -1,6 +1,8 @@
 "use client";
 
+import { useAuth } from "@/ hooks/useAuth";
 import { useGearDetails } from "@/features/gear/hooks/useGear";
+import { Review } from "@/features/gear/types/gear.type";
 import {
   BadgeCheck,
   Boxes,
@@ -11,14 +13,18 @@ import {
   Tag,
 } from "lucide-react";
 import Image from "next/image";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function GearDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const { data: gear, isLoading } = useGearDetails(id);
 
+  const pathname = usePathname();
+
+  const { user, isAuthenticated } = useAuth(); // your auth hook
   const [selectedImage, setSelectedImage] = useState(0);
 
   if (isLoading) {
@@ -32,6 +38,28 @@ export default function GearDetailsPage() {
       <div className="container mx-auto py-20 text-center">Gear not found.</div>
     );
   }
+
+  const handleRent = () => {
+    // Guest
+    if (!isAuthenticated) {
+      router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
+      return;
+    }
+
+    // Provider
+    if (user?.role === "PROVIDER") {
+      toast.error("Providers cannot rent gear.");
+      return;
+    }
+
+    if (user?.role === "ADMIN") {
+      toast.error("Admin cannot rent gear");
+      return;
+    }
+
+    // Customer
+    router.push(`/rent/${gear.id}`);
+  };
 
   return (
     <div className="bg-muted/20">
@@ -203,7 +231,7 @@ export default function GearDetailsPage() {
                 </p>
               ) : (
                 <div className="space-y-4">
-                  {gear.reviews.slice(0, 3).map((review: any) => (
+                  {gear.reviews.slice(0, 3).map((review: Review) => (
                     <div key={review.id} className="rounded-lg border p-4">
                       <div className="mb-2 flex items-center justify-between">
                         <p className="font-medium">
@@ -229,7 +257,10 @@ export default function GearDetailsPage() {
               )}
             </div>
 
-            <button className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-4 text-lg font-semibold text-white transition hover:opacity-90">
+            <button
+              onClick={handleRent}
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-4 text-lg font-semibold text-white transition hover:opacity-90"
+            >
               <BadgeCheck size={20} />
               Rent Now
             </button>

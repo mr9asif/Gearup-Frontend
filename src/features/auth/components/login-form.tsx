@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -30,6 +30,10 @@ export default function LoginForm() {
   const router = useRouter();
   const login = useLogin();
 
+  const searchParams = useSearchParams();
+
+  const redirect = searchParams.get("redirect");
+
   const {
     register,
     handleSubmit,
@@ -46,7 +50,10 @@ export default function LoginForm() {
     login.mutate(values, {
       onSuccess: (res) => {
         toast.success(res.message);
-
+        if (redirect) {
+          router.replace(redirect);
+          return;
+        }
         switch (res.data.user.role) {
           case "ADMIN":
             router.push("/dashboard/admin");

@@ -30,3 +30,12 @@ export interface Gear {
     name: string;
   };
 }
+
+export type Review = {
+  id: string;
+  rating: number;
+  comment: string;
+  user?: {
+    name: string;
+  } | null;
+};
