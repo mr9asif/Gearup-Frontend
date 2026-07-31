@@ -27,4 +27,9 @@ export const gearService = {
 
     return data;
   },
+
+  getGearById: async (id: string) => {
+    const response = await axiosInstance.get(`/gear/${id}`);
+    return response.data.data;
+  },
 };

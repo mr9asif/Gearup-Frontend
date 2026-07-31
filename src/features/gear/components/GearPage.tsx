@@ -8,6 +8,7 @@ import { Pagination } from "./Pagination";
 import { SearchBar } from "./SearchBar";
 
 import { useGear } from "../hooks/useGear";
+import { Gear } from "../types/gear.type";
 
 export function GearPage() {
   const [search, setSearch] = useState("");
@@ -44,7 +45,7 @@ export function GearPage() {
   });
 
   const gears = data?.data ?? [];
-  console.log("gear", data?.data);
+  console.log("gear", gears);
 
   const meta = data?.data?.meta;
 
@@ -65,7 +66,7 @@ export function GearPage() {
    */
 
   const brands = useMemo(() => {
-    const values = gears.map((gear) => gear.brand);
+    const values = gears.map((gear: Gear) => gear.brand);
 
     return [...new Set(values)];
   }, [gears]);
