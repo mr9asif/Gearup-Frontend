@@ -25,4 +25,26 @@ export const rentalService = {
 
     return data.data;
   },
+
+  getProviderOrders: async () => {
+    const { data } = await axiosInstance.get("/rentals/provider/orders");
+    console.log(data);
+    return data.data;
+  },
+
+  acceptRental: async (orderId: string) => {
+    const { data } = await axiosInstance.patch(
+      `/rentals/provider/${orderId}/accept`,
+    );
+
+    return data;
+  },
+
+  rejectRental: async (orderId: string) => {
+    const { data } = await axiosInstance.patch(
+      `/rentals/provider/${orderId}/reject`,
+    );
+
+    return data;
+  },
 };

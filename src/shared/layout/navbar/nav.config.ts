@@ -48,7 +48,7 @@ export const providerNav: NavItem[] = [
   },
   {
     label: "Bookings",
-    href: "/dashboard/provider/bookings",
+    href: "/dashboard/provider/orders",
   },
   {
     label: "Add Gear",
