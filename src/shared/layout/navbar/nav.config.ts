@@ -8,10 +8,7 @@ export const guestNav: NavItem[] = [
     label: "Browse Gear",
     href: "/gear",
   },
-  {
-    label: "Categories",
-    href: "/categories",
-  },
+
   {
     label: "About",
     href: "/about",
@@ -24,9 +21,10 @@ export const customerNav: NavItem[] = [
     href: "/gear",
   },
   {
-    label: "Categories",
-    href: "/categories",
+    label: "Payments",
+    href: "/dashboard/customer/payments",
   },
+
   {
     label: "My Rentals",
     href: "/dashboard/customer/rentals",
