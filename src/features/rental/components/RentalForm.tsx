@@ -70,7 +70,7 @@ export default function RentalForm({
         onSuccess: () => {
           toast.success("Rental request created.");
 
-          router.push("/dashboard/customer/orders");
+          router.push("/dashboard/customer/rentals");
         },
 
         onError: (error) => {

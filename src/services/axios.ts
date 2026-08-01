@@ -17,6 +17,11 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
+    // Don't retry the refresh request itself
+    if (originalRequest?.url?.includes("/auth/refresh-token")) {
+      return Promise.reject(error);
+    }
+
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
@@ -33,9 +38,7 @@ axiosInstance.interceptors.response.use(
         // Retry original request
         return axiosInstance(originalRequest);
       } catch {
-        if (window.location.pathname !== "/login") {
-          window.location.replace("/login");
-        }
+        // Let the caller (AuthGuard or page) handle the 401.
         return Promise.reject(error);
       }
     }
