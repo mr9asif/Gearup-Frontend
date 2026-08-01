@@ -1,3 +1,4 @@
+import { axiosInstance } from "@/services/axios";
 import { jwtVerify } from "jose";
 
 export async function verifyAccessToken(token: string) {
@@ -7,3 +8,7 @@ export async function verifyAccessToken(token: string) {
 
   return payload;
 }
+
+export const refreshAccessToken = async () => {
+  await axiosInstance.post("/auth/refresh-token");
+};

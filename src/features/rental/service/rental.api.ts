@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 import { axiosInstance } from "@/services/axios";
 
 export interface CreateRentalPayload {
@@ -9,10 +11,10 @@ export interface CreateRentalPayload {
 
 export const rentalService = {
   createRental: async (payload: CreateRentalPayload) => {
-    const { data } = await axiosInstance.post("/rentals", {
+    const { data } = await axiosInstance.post("/rentals/customer", {
       ...payload,
-      startDate: payload.startDate,
-      endDate: payload.endDate,
+      startDate: format(payload.startDate, "yyyy-MM-dd"),
+      endDate: format(payload.endDate, "yyyy-MM-dd"),
     });
 
     return data;
