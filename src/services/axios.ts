@@ -33,7 +33,9 @@ axiosInstance.interceptors.response.use(
         // Retry original request
         return axiosInstance(originalRequest);
       } catch {
-        window.location.href = "/login";
+        if (window.location.pathname !== "/login") {
+          window.location.replace("/login");
+        }
         return Promise.reject(error);
       }
     }

@@ -19,4 +19,10 @@ export const rentalService = {
 
     return data;
   },
+
+  getCustomerOrders: async () => {
+    const { data } = await axiosInstance.get("/rentals/customer/my-orders");
+
+    return data.data;
+  },
 };
