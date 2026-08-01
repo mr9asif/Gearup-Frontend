@@ -7,12 +7,19 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useCreatePayment } from "@/features/payment/hooks/useCreatePayment";
+import { useState } from "react";
 import { useCustomerRentals } from "../hooks/useCustomerRental";
 import { RentalOrder } from "../types/rental.type";
+
+import LeaveReviewModal from "@/features/review/components/LeaveReviewModel";
+import { Review } from "@/features/review/types/review.type";
 
 export default function RentalPage() {
   const { data: orders, isLoading } = useCustomerRentals();
   const { mutate: createPayment, isPending } = useCreatePayment();
+  const [reviewRentalId, setReviewRentalId] = useState<string | null>(null);
+
+  const [editingReview, setEditingReview] = useState<Review | null>(null);
   if (isLoading) {
     return (
       <div className="flex h-80 items-center justify-center">Loading...</div>
@@ -122,12 +129,40 @@ export default function RentalPage() {
                       Order Cancelled
                     </Button>
                   )}
+                  {order.status === "RETURNED" &&
+                    (order.review ? (
+                      <Button
+                        variant="outline"
+                        onClick={() => setEditingReview(order.review)}
+                      >
+                        Edit Review
+                      </Button>
+                    ) : (
+                      <Button onClick={() => setReviewRentalId(order.id)}>
+                        Leave Review
+                      </Button>
+                    ))}
                 </div>
               </div>
             </CardContent>
           </Card>
         ))}
       </div>
+      <LeaveReviewModal
+        open={!!reviewRentalId}
+        onOpenChange={(open) => {
+          if (!open) setReviewRentalId(null);
+        }}
+        rentalId={reviewRentalId ?? undefined}
+      />
+
+      <LeaveReviewModal
+        open={!!editingReview}
+        onOpenChange={(open) => {
+          if (!open) setEditingReview(null);
+        }}
+        review={editingReview ?? undefined}
+      />
     </div>
   );
 }

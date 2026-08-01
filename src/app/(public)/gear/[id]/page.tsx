@@ -235,7 +235,7 @@ export default function GearDetailsPage() {
                     <div key={review.id} className="rounded-lg border p-4">
                       <div className="mb-2 flex items-center justify-between">
                         <p className="font-medium">
-                          {review.user?.name ?? "Anonymous"}
+                          {review.customer?.name ?? "Anonymous"}
                         </p>
 
                         <div className="flex items-center gap-1">

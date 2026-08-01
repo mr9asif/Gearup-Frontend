@@ -35,7 +35,8 @@ export type Review = {
   id: string;
   rating: number;
   comment: string;
-  user?: {
+  customer?: {
     name: string;
+    profileImage: string;
   } | null;
 };

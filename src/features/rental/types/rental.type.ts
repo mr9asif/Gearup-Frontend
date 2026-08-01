@@ -61,6 +61,11 @@ export interface RentalOrder {
       name: string;
     };
   };
+  review?: {
+    id: string;
+    rating: number;
+    comment: string;
+  } | null;
 
   payment: {
     id: string;
