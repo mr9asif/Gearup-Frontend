@@ -58,7 +58,7 @@ export default function GearDetailsPage() {
     }
 
     // Customer
-    router.push(`/rent/${gear.id}`);
+    router.push(`/rentals/${gear.id}`);
   };
 
   return (

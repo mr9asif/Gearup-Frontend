@@ -10,3 +10,9 @@ export interface Pagination {
   total: number;
   totalPage: number;
 }
+
+export interface ApiErrorResponse {
+  success?: boolean;
+  message: string;
+  errors?: Record<string, string[]>;
+}
