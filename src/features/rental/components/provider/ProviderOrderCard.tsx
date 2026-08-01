@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAcceptRental } from "../../hooks/useAcceptRental";
 import { useRejectRental } from "../../hooks/useRejectRental";
+import { useStartRental } from "../../hooks/useStartRental";
 import { RentalOrder } from "../../types/rental.type";
 
 interface ProviderOrderCardProps {
@@ -18,6 +19,7 @@ export default function ProviderOrderCard({ order }: ProviderOrderCardProps) {
   const { mutate: acceptRental, isPending: isAccepting } = useAcceptRental();
 
   const { mutate: rejectRental, isPending: isRejecting } = useRejectRental();
+  const { mutate: startRental, isPending: isStarting } = useStartRental();
   return (
     <Card>
       <CardContent className="p-6">
@@ -86,6 +88,16 @@ export default function ProviderOrderCard({ order }: ProviderOrderCardProps) {
 
             {order.status === "CONFIRMED" && (
               <Button disabled>Waiting for Payment</Button>
+            )}
+
+            {order.status === "PAID" && (
+              <Button
+                disabled={isStarting}
+                onClick={() => startRental(order.id)}
+              >
+                {" "}
+                {isStarting ? "Starting..." : "Start Rental"}
+              </Button>
             )}
 
             {order.status === "PICKED_UP" && <Button>Mark Returned</Button>}

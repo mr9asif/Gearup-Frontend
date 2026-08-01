@@ -13,7 +13,7 @@ export interface Rental {
   startDate: string;
   endDate: string;
   totalAmount: string;
-  status: "PLACED" | "CONFIRMED" | "CANCELLED" | "COMPLETED";
+  status: "PLACED" | "CONFIRMED" | "PAID" | "CANCELLED" | "COMPLETED";
   createdAt: string;
   updatedAt: string;
 }
@@ -28,7 +28,13 @@ export interface RentalOrder {
   endDate: string;
   totalAmount: string;
 
-  status: "PLACED" | "CONFIRMED" | "PICKED_UP" | "RETURNED" | "CANCELLED";
+  status:
+    | "PLACED"
+    | "CONFIRMED"
+    | "PICKED_UP"
+    | "RETURNED"
+    | "CANCELLED"
+    | "PAID";
 
   customer: {
     id: string;

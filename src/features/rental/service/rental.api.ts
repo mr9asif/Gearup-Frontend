@@ -47,4 +47,11 @@ export const rentalService = {
 
     return data;
   },
+  startRental: async (orderId: string) => {
+    const { data } = await axiosInstance.patch(
+      `/rentals/provider/${orderId}/start`,
+    );
+
+    return data;
+  },
 };

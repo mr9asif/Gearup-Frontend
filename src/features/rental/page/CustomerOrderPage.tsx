@@ -110,8 +110,11 @@ export default function RentalPage() {
                     </Button>
                   )}
 
-                  {order.payment?.status === "COMPLETED" && (
-                    <Button disabled>Payment Completed</Button>
+                  {order.status === "PAID" && (
+                    <Button disabled>Waiting for Start Rental</Button>
+                  )}
+                  {order.status === "PICKED_UP" && (
+                    <Button disabled>Rental In Progress</Button>
                   )}
 
                   {order.status === "CANCELLED" && (
