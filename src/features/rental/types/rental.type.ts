@@ -51,6 +51,9 @@ export interface RentalOrder {
       id: string;
       name: string;
     };
+    provider: {
+      name: string;
+    };
   };
 
   payment: {

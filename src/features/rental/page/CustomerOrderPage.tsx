@@ -6,12 +6,13 @@ import { CalendarDays, Package2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useCreatePayment } from "@/features/payment/hooks/useCreatePayment";
 import { useCustomerRentals } from "../hooks/useCustomerRental";
 import { RentalOrder } from "../types/rental.type";
 
 export default function RentalPage() {
   const { data: orders, isLoading } = useCustomerRentals();
-
+  const { mutate: createPayment, isPending } = useCreatePayment();
   if (isLoading) {
     return (
       <div className="flex h-80 items-center justify-center">Loading...</div>
@@ -101,7 +102,12 @@ export default function RentalPage() {
                   )}
 
                   {order.status === "CONFIRMED" && !order.payment && (
-                    <Button>Pay Now</Button>
+                    <Button
+                      disabled={isPending}
+                      onClick={() => createPayment(order.id)}
+                    >
+                      {isPending ? "Redirecting..." : "Pay Now"}
+                    </Button>
                   )}
 
                   {order.payment?.status === "COMPLETED" && (
