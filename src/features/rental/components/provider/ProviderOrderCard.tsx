@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAcceptRental } from "../../hooks/useAcceptRental";
+import { useCompleteRental } from "../../hooks/useCompleteRental";
 import { useRejectRental } from "../../hooks/useRejectRental";
 import { useStartRental } from "../../hooks/useStartRental";
 import { RentalOrder } from "../../types/rental.type";
@@ -20,6 +21,7 @@ export default function ProviderOrderCard({ order }: ProviderOrderCardProps) {
 
   const { mutate: rejectRental, isPending: isRejecting } = useRejectRental();
   const { mutate: startRental, isPending: isStarting } = useStartRental();
+  const { mutate: completeRental, isPending: completing } = useCompleteRental();
   return (
     <Card>
       <CardContent className="p-6">
@@ -100,7 +102,14 @@ export default function ProviderOrderCard({ order }: ProviderOrderCardProps) {
               </Button>
             )}
 
-            {order.status === "PICKED_UP" && <Button>Mark Returned</Button>}
+            {order.status === "PICKED_UP" && (
+              <Button
+                disabled={completing}
+                onClick={() => completeRental(order.id)}
+              >
+                {completing ? "Completing..." : "Mark Returned"}
+              </Button>
+            )}
 
             {order.status === "RETURNED" && <Button disabled>Completed</Button>}
 

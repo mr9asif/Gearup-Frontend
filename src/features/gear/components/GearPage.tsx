@@ -45,9 +45,8 @@ export function GearPage() {
   });
 
   const gears = data?.data ?? [];
-  console.log("gear", gears);
-
-  const meta = data?.data?.meta;
+  const meta = data?.meta;
+  console.log(gears);
 
   /**
    * Temporary

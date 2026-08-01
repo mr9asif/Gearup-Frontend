@@ -20,13 +20,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { useAuthStore } from "@/store/auth.store";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function UserMenu() {
   const router = useRouter();
 
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
-
+  const queryClient = useQueryClient();
   if (!user) {
     return (
       <div className="hidden items-center gap-2 md:flex">
@@ -48,6 +49,10 @@ export function UserMenu() {
 
   const handleLogout = () => {
     logout();
+
+    // Clear all React Query cache
+    queryClient.clear();
+
     router.push("/");
   };
 

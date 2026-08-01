@@ -4,10 +4,14 @@ import { Package2 } from "lucide-react";
 import ProviderOrderCard from "../components/provider/ProviderOrderCard";
 import { useProviderOrders } from "../hooks/useProviderOrder";
 import { RentalOrder } from "../types/rental.type";
+import { useCompleteRental } from "../hooks/useCompleteRental";
 
 export default function ProviderOrdersPage() {
   const { data: orders, isLoading } = useProviderOrders();
-
+const {
+  mutate: completeRental,
+  isPending: completing,
+} = useCompleteRental();
   if (isLoading) {
     return (
       <div className="flex h-80 items-center justify-center">Loading...</div>
