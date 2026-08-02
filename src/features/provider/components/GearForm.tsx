@@ -31,7 +31,7 @@ interface GearFormProps {
 export default function GearForm({ mode, initialData }: GearFormProps) {
   const createGear = useCreateGear();
   const updateGear = useUpdateGear();
-  const [existingImages, setExistingImages] = useState<string[]>([]);
+
   const { data: categories = [] } = useCategories();
 
   // Store selected image files
@@ -89,12 +89,18 @@ export default function GearForm({ mode, initialData }: GearFormProps) {
           setFiles([]);
         },
       });
-    } else {
-      updateGear.mutate({
-        id: initialData!.id,
-        formData,
-      });
+
+      return;
     }
+
+    const gear = initialData;
+
+    if (!gear) return;
+
+    updateGear.mutate({
+      id: gear.id,
+      formData,
+    });
   };
 
   return (
@@ -232,7 +238,6 @@ export default function GearForm({ mode, initialData }: GearFormProps) {
                 </div>
               </div>
             )}
-          {console.log(initialData)}
 
           {/* Images */}
           <ImageUploader files={files} setFiles={setFiles} />
