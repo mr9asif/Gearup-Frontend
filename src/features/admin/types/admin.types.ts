@@ -44,17 +44,30 @@ export interface AdminUsersResponse {
 export interface Rental {
   id: string;
   quantity: number;
-  totalPrice: number;
+  totalAmount: string;
   status: string;
-  paymentStatus: string;
+  startDate: string;
+  endDate: string;
+  createdAt: string;
 
   customer: {
     id: string;
     name: string;
+    email: string;
+    profileImage: string | null;
   };
 
   gear: {
     id: string;
     name: string;
+    images: string[];
+  };
+
+  payment: {
+    id: string;
+    transactionId: string;
+    amount: string;
+    provider: string;
+    status: string;
   };
 }

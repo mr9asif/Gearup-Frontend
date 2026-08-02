@@ -37,10 +37,12 @@ export const adminService = {
   },
 
   // Gears
-  getGears: async () => {
-    const response = await axiosInstance.get("/admin/gear");
+  getGears: async (params?: { page?: number; limit?: number }) => {
+    const response = await axiosInstance.get("/admin/gear", {
+      params,
+    });
 
-    return response.data;
+    return response.data.data;
   },
 
   getGear: async (id: string) => {
@@ -50,8 +52,10 @@ export const adminService = {
   },
 
   // Rentals
-  getRentals: async () => {
-    const response = await axiosInstance.get("/admin/rentals");
+  getRentals: async (params?: { page?: number; limit?: number }) => {
+    const response = await axiosInstance.get("/admin/rentals", {
+      params,
+    });
 
     return response.data.data;
   },

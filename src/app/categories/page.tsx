@@ -2,12 +2,12 @@
 
 import { FolderOpen } from "lucide-react";
 
-import { useCategories } from "@/features/category/hooks/useCategories";
-
 import { Card, CardContent } from "@/components/ui/card";
+import { useGetCategories } from "@/features/category/hooks/useGetCategories";
+import { Category } from "@/features/category/types/category.type";
 
 export default function CategoriesPage() {
-  const { data: categories, isLoading } = useCategories();
+  const { data: categories, isLoading } = useGetCategories();
 
   if (isLoading) {
     return (
@@ -42,7 +42,7 @@ export default function CategoriesPage() {
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {categories.map((category) => (
+        {categories.map((category: Category) => (
           <Card key={category.id} className="transition-all hover:shadow-lg">
             <CardContent className="flex flex-col gap-3 p-6">
               <FolderOpen className="text-primary h-10 w-10" />

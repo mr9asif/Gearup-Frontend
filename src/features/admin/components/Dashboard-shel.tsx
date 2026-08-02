@@ -13,7 +13,7 @@ export default function DashboardShell({ children }: DashboardShellProps) {
       <div className="flex flex-1 flex-col overflow-hidden">
         <DashboardHeader />
 
-        <main className="flex-1 overflow-hidden">{children}</main>
+        <main className="flex-1 overflow-y-auto">{children}</main>
       </div>
     </div>
   );

@@ -1,10 +1,35 @@
 import { axiosInstance } from "@/services/axios";
-import { Category } from "../types/category.type";
 
 export const categoryService = {
-  getAllCategories: async (): Promise<Category[]> => {
-    const { data } = await axiosInstance.get("/categories");
+  getCategories: async (params?: { page?: number; limit?: number }) => {
+    const response = await axiosInstance.get("/categories", {
+      params,
+    });
 
-    return data.data.data;
+    return response.data.data;
+  },
+
+  createCategory: async (payload: { name: string; description: string }) => {
+    const response = await axiosInstance.post("/categories", payload);
+
+    return response.data.data;
+  },
+
+  updateCategory: async (
+    id: string,
+    payload: {
+      name: string;
+      description: string;
+    },
+  ) => {
+    const response = await axiosInstance.patch(`/categories/${id}`, payload);
+
+    return response.data.data;
+  },
+
+  deleteCategory: async (id: string) => {
+    const response = await axiosInstance.delete(`/admin/categories/${id}`);
+
+    return response.data.data;
   },
 };

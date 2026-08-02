@@ -2,17 +2,10 @@
 
 import { useState } from "react";
 
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import UserFilters from "@/features/admin/components/user-filter";
 import UserTable from "@/features/admin/components/user-table";
 import { useUsers } from "@/features/admin/hooks/useUsers";
+import AppPagination from "@/shared/common/AppPagination";
 
 export default function UsersPage() {
   const [search, setSearch] = useState("");
@@ -59,62 +52,14 @@ export default function UsersPage() {
       </div>
 
       {/* Pagination */}
-      <div className="border-t bg-background px-6 py-4">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <p className="text-sm text-muted-foreground inline">
-            Showing {(page - 1) * 10 + 1} -{" "}
-            {Math.min(page * 10, data?.meta.total ?? 0)} of{" "}
-            {data?.meta.total ?? 0} users
-          </p>
-
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-
-                    if (page > 1) {
-                      setPage(page - 1);
-                    }
-                  }}
-                />
-              </PaginationItem>
-
-              {Array.from({ length: data?.meta.totalPage ?? 1 }, (_, i) => {
-                const pageNumber = i + 1;
-
-                return (
-                  <PaginationItem key={pageNumber}>
-                    <PaginationLink
-                      href="#"
-                      isActive={page === pageNumber}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setPage(pageNumber);
-                      }}
-                    >
-                      {pageNumber}
-                    </PaginationLink>
-                  </PaginationItem>
-                );
-              })}
-
-              <PaginationItem>
-                <PaginationNext
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-
-                    if (page < (data?.meta.totalPage ?? 1)) {
-                      setPage(page + 1);
-                    }
-                  }}
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
+      <div className="w-full border-t bg-background px-6 py-4">
+        <div className="flex justify-center">
+          <AppPagination
+            page={page}
+            limit={10}
+            meta={data?.meta}
+            onPageChange={setPage}
+          />
         </div>
       </div>
     </div>

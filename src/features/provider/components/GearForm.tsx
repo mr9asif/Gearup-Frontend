@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
-import { useCategories } from "@/features/category/hooks/useCategories";
+import { useCategories } from "@/features/category/hooks/useGetCategories";
 
 import { useCreateGear } from "../hooks/useCreateGear";
 import { CreateGearFormValues, createGearSchema } from "../schema/gear.schema";
