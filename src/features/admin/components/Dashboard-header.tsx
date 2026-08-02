@@ -1,9 +1,15 @@
+import MobileSidebar from "./Mobile-sidebar";
+
 export default function DashboardHeader() {
   return (
-    <header className="flex h-16 items-center justify-between border-b bg-background px-6">
-      <h1 className="text-xl font-semibold">Admin Dashboard</h1>
+    <header className="flex h-16 items-center justify-between border-b px-6">
+      <div className="flex items-center gap-3">
+        <MobileSidebar />
 
-      <div className="text-sm text-muted-foreground">Welcome Admin</div>
+        <h1 className="text-lg font-semibold">Admin Dashboard</h1>
+      </div>
+
+      {/* Avatar */}
     </header>
   );
 }
