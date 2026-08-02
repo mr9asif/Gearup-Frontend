@@ -9,12 +9,19 @@ export const adminService = {
   },
 
   // Users
-  getUsers: async () => {
-    const response = await axiosInstance.get("/admin/users");
+  getUsers: async (params?: {
+    search?: string;
+    role?: string;
+    status?: string;
+    page?: number;
+    limit?: number;
+  }) => {
+    const response = await axiosInstance.get("/admin/users", {
+      params,
+    });
 
     return response.data.data;
   },
-
   getUser: async (id: string) => {
     const response = await axiosInstance.get(`/admin/users/${id}`);
 
