@@ -6,13 +6,17 @@ import Link from "next/link";
 import { ArrowRight, Heart, MapPin, Star } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { FeaturedGear } from "../types/home.types";
+import { Gear } from "../types/home.types";
 
 interface GearCardProps {
-  gear: FeaturedGear;
+  gear: Gear;
+  variant?: "customer" | "provider";
 }
 
-export function GearCard({ gear }: GearCardProps) {
+export default function GearCard({
+  gear,
+  variant = "customer",
+}: GearCardProps) {
   return (
     <div className="group overflow-hidden rounded-3xl border bg-card transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
       {/* Image */}

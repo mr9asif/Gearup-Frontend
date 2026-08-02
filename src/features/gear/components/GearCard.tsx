@@ -1,18 +1,24 @@
 "use client";
 
-import { ArrowRight, Package } from "lucide-react";
+import { Package } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+import { Button } from "@/components/ui/button";
+
 import { Gear } from "../types/gear.type";
 
 interface GearCardProps {
   gear: Gear;
+  variant?: "customer" | "provider";
 }
-export function GearCard({ gear }: GearCardProps) {
+
+export function GearCard({ gear, variant = "customer" }: GearCardProps) {
+  const router = useRouter();
+
   return (
     <div className="group overflow-hidden rounded-2xl border border-border bg-background transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-xl">
       {/* Image */}
-
       <div className="relative aspect-[4/3] overflow-hidden">
         <Image
           src={gear.images?.[0] || "/placeholder.png"}
@@ -31,7 +37,6 @@ export function GearCard({ gear }: GearCardProps) {
       </div>
 
       {/* Content */}
-
       <div className="space-y-4 p-5">
         {gear.category && (
           <span className="text-xs uppercase tracking-wider text-primary">
@@ -56,18 +61,38 @@ export function GearCard({ gear }: GearCardProps) {
 
           <div className="flex items-center gap-1 text-muted-foreground">
             <Package className="h-4 w-4" />
-
             <span>{gear.stock}</span>
           </div>
         </div>
 
-        <Link
-          href={`/gear/${gear.id}`}
-          className="flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-medium text-primary-foreground transition hover:opacity-90"
-        >
-          View Details
-          <ArrowRight className="h-4 w-4" />
-        </Link>
+        {/* Actions */}
+        <div className="flex gap-2">
+          <Button
+            className="flex-1"
+            onClick={() => router.push(`/gear/${gear.id}`)}
+          >
+            View Details
+          </Button>
+
+          {variant === "customer" ? (
+            <Button
+              className="flex-1"
+              onClick={() => router.push(`/rent/${gear.id}`)}
+            >
+              Rent Now
+            </Button>
+          ) : (
+            <Button
+              variant="outline"
+              className="flex-1"
+              onClick={() =>
+                router.push(`/dashboard/provider/gears/${gear.id}/edit`)
+              }
+            >
+              Edit Gear
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );

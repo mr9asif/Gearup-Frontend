@@ -1,9 +1,9 @@
-export interface FeaturedGear {
+export interface Gear {
   id: string;
   name: string;
   brand: string;
   description: string;
-  pricePerDay: number;
+  pricePerDay: string;
   stock: number;
   isAvailable: boolean;
   images: string[];

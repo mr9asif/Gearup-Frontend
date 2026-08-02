@@ -6,7 +6,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 import { useFeaturedGear } from "../hooks/use-featured";
-import { GearCard } from "./GearCard";
+
+import GearCard from "./GearCard";
 import { GearCardSkeleton } from "./GearCardSkeleton";
 
 export function FeaturedGearSection() {

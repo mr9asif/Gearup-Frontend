@@ -10,7 +10,7 @@ export const createGearSchema = z.object({
 
   stock: z.number().int().min(1),
 
-  images: z.array(z.string()).optional(),
+  images: z.instanceof(File).array().optional(),
 });
 
 export type CreateGearFormValues = z.infer<typeof createGearSchema>;

@@ -2,7 +2,6 @@ import { Gear } from "@/features/gear/types/gear.type";
 
 import { axiosInstance } from "@/services/axios";
 import { ApiResponse } from "@/types/api";
-import { CreateGearFormValues } from "../schema/gear.schema";
 
 type ProviderGearResponse = {
   data: Gear[];
@@ -18,10 +17,34 @@ export const providerService = {
     return data.data.data;
   },
 
-  createGear: async (payload: CreateGearFormValues) => {
-    const { data } = await axiosInstance.post<ApiResponse<Gear>>(
-      "/provider/gear",
-      payload,
+  // 👇 ADD THIS
+  getMyGearById: async (id: string) => {
+    const { data } = await axiosInstance.get<ApiResponse<Gear>>(
+      `/provider/gear/${id}`,
+    );
+
+    return data.data;
+  },
+
+  createGear: async (payload: FormData) => {
+    const { data } = await axiosInstance.post("/provider/gear", payload, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return data.data;
+  },
+
+  updateGear: async ({ id, formData }: { id: string; formData: FormData }) => {
+    const { data } = await axiosInstance.patch(
+      `/provider/gear/${id}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      },
     );
 
     return data.data;

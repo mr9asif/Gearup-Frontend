@@ -257,13 +257,17 @@ export default function GearDetailsPage() {
               )}
             </div>
 
-            <button
-              onClick={handleRent}
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-4 text-lg font-semibold text-white transition hover:opacity-90"
-            >
-              <BadgeCheck size={20} />
-              Rent Now
-            </button>
+            {/* Action Button */}
+            {user?.role !== "PROVIDER" && user?.role !== "ADMIN" && (
+              <button
+                onClick={handleRent}
+                disabled={!gear.isAvailable}
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-4 text-lg font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <BadgeCheck size={20} />
+                {gear.isAvailable ? "Rent Now" : "Unavailable"}
+              </button>
+            )}
           </div>
         </div>
       </div>

@@ -37,10 +37,6 @@ export const customerNav: NavItem[] = [
 
 export const providerNav: NavItem[] = [
   {
-    label: "Browse Gear",
-    href: "/gear",
-  },
-  {
     label: "My Gear",
     href: "/dashboard/provider/gears",
   },
