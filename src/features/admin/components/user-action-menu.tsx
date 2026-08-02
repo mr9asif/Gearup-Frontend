@@ -8,6 +8,8 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 
+import { useUpdateUserStatus } from "../hooks/useUpdateUserStatus";
+
 interface User {
   id: string;
   status: "ACTIVE" | "SUSPENDED";
@@ -19,6 +21,15 @@ interface Props {
 
 export default function UserActionMenu({ user }: Props) {
   const router = useRouter();
+
+  const { mutate, isPending } = useUpdateUserStatus();
+
+  const handleStatusChange = () => {
+    mutate({
+      id: user.id,
+      status: user.status === "ACTIVE" ? "SUSPENDED" : "ACTIVE",
+    });
+  };
 
   return (
     <>
@@ -32,14 +43,22 @@ export default function UserActionMenu({ user }: Props) {
       <DropdownMenuSeparator />
 
       {user.status === "ACTIVE" ? (
-        <DropdownMenuItem className="text-red-600 focus:text-red-600">
+        <DropdownMenuItem
+          disabled={isPending}
+          className="text-red-600 focus:text-red-600"
+          onClick={handleStatusChange}
+        >
           <ShieldX className="mr-2 h-4 w-4" />
-          Suspend User
+          {isPending ? "Suspending..." : "Suspend User"}
         </DropdownMenuItem>
       ) : (
-        <DropdownMenuItem className="text-green-600 focus:text-green-600">
+        <DropdownMenuItem
+          disabled={isPending}
+          className="text-green-600 focus:text-green-600"
+          onClick={handleStatusChange}
+        >
           <ShieldCheck className="mr-2 h-4 w-4" />
-          Activate User
+          {isPending ? "Activating..." : "Activate User"}
         </DropdownMenuItem>
       )}
     </>

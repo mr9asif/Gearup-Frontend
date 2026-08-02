@@ -14,7 +14,10 @@ interface NavItemProps {
 export default function NavItem({ title, href, icon: Icon }: NavItemProps) {
   const pathname = usePathname();
 
-  const isActive = pathname === href || pathname.startsWith(`${href}/`);
+  const isActive =
+    href === "/dashboard/admin"
+      ? pathname === href
+      : pathname === href || pathname.startsWith(`${href}/`);
 
   return (
     <Link
