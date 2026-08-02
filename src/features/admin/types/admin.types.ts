@@ -40,3 +40,21 @@ export interface AdminUsersResponse {
 
   data: AdminUser[];
 }
+
+export interface Rental {
+  id: string;
+  quantity: number;
+  totalPrice: number;
+  status: string;
+  paymentStatus: string;
+
+  customer: {
+    id: string;
+    name: string;
+  };
+
+  gear: {
+    id: string;
+    name: string;
+  };
+}

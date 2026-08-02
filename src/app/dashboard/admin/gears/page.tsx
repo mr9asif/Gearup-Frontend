@@ -24,6 +24,7 @@ export default function AdminGearPage() {
   }
 
   const gears = data?.data ?? [];
+  console.log(gears);
 
   return (
     <div className="space-y-6">

@@ -24,7 +24,7 @@ export const adminService = {
   },
   getUser: async (id: string) => {
     const response = await axiosInstance.get(`/admin/users/${id}`);
-
+    console.log(response);
     return response.data.data;
   },
 
@@ -38,9 +38,9 @@ export const adminService = {
 
   // Gears
   getGears: async () => {
-    const response = await axiosInstance.get("/admin/gears");
+    const response = await axiosInstance.get("/admin/gear");
 
-    return response.data.data;
+    return response.data;
   },
 
   getGear: async (id: string) => {
