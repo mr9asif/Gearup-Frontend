@@ -1,43 +1,9 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-
-import { Navbar } from "@/shared/layout/navbar";
-import { useAuthStore } from "@/store/auth.store";
+import DashboardShell from "@/features/admin/components/Dashboard-shel";
 
 export default function DashboardLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
-  const router = useRouter();
-
-  const user = useAuthStore((state) => state.user);
-  const isLoading = useAuthStore((state) => state.isLoading);
-
-  useEffect(() => {
-    if (!isLoading && !user) {
-      router.replace("/login");
-    }
-  }, [user, isLoading, router]);
-
-  if (isLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <p>Loading...</p>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return null;
-  }
-
-  return (
-    <>
-      <Navbar />
-      {children}
-    </>
-  );
+}) {
+  return <DashboardShell>{children}</DashboardShell>;
 }
