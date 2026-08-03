@@ -6,6 +6,7 @@ import { FilterBar } from "./FilterBar";
 import { GearGrid } from "./GearGrid";
 import { SearchBar } from "./SearchBar";
 
+import AppLoader from "@/shared/common/AppLoader";
 import { useGear } from "../hooks/useGear";
 import { Gear } from "../types/gear.type";
 
@@ -99,7 +100,9 @@ export function GearPage() {
 
       {/* Loading */}
       {isPending && (
-        <div className="py-20 text-center">Loading equipment...</div>
+        <div>
+          <AppLoader />
+        </div>
       )}
 
       {/* Error */}
