@@ -59,11 +59,19 @@ export function UserMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="rounded-full outline-none transition-transform hover:scale-105 focus-visible:ring-2 focus-visible:ring-primary">
-        <Avatar className="cursor-pointer">
-          <AvatarFallback className="font-semibold">
-            {user.name.charAt(0).toUpperCase()}
-          </AvatarFallback>
-        </Avatar>
+        <div className="h-10 w-10 overflow-hidden rounded-full bg-primary">
+          {user.profileImage ? (
+            <img
+              src={user.profileImage}
+              alt={user.name}
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center font-semibold text-primary-foreground">
+              {user.name.charAt(0).toUpperCase()}
+            </div>
+          )}
+        </div>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="w-72">
@@ -71,9 +79,17 @@ export function UserMenu() {
         <div className="px-3 py-4">
           <div className="flex items-center gap-3">
             <Avatar>
-              <AvatarFallback className="font-semibold">
-                {user.name.charAt(0).toUpperCase()}
-              </AvatarFallback>
+              {user.profileImage ? (
+                <img
+                  src={user.profileImage}
+                  alt={user.name}
+                  className="h-full w-full rounded-full object-cover"
+                />
+              ) : (
+                <AvatarFallback className="font-semibold">
+                  {user.name.charAt(0).toUpperCase()}
+                </AvatarFallback>
+              )}
             </Avatar>
 
             <div className="min-w-0">

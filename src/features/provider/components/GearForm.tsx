@@ -4,8 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
-import { useCategories } from "@/features/category/hooks/useGetCategories";
-
 import { useCreateGear } from "../hooks/useCreateGear";
 import { CreateGearFormValues, createGearSchema } from "../schema/gear.schema";
 
@@ -20,6 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useGetCategories } from "@/features/category/hooks/useGetCategories";
 import { Gear } from "@/features/gear/types/gear.type";
 import { useUpdateGear } from "../hooks/useUpdateGear";
 import ImageUploader from "./ImageUploader";
@@ -32,7 +31,8 @@ export default function GearForm({ mode, initialData }: GearFormProps) {
   const createGear = useCreateGear();
   const updateGear = useUpdateGear();
 
-  const { data: categories = [] } = useCategories();
+  const { data: categories = [] } = useGetCategories();
+  console.log(categories);
 
   // Store selected image files
   const [files, setFiles] = useState<File[]>([]);

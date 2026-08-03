@@ -6,7 +6,7 @@ export const categoryService = {
       params,
     });
 
-    return response.data.data;
+    return response.data.data.data;
   },
 
   createCategory: async (payload: { name: string; description: string }) => {

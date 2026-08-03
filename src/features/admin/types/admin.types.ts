@@ -1,5 +1,7 @@
 // dashboard.type.ts
 
+import { LucideIcon } from "lucide-react";
+
 export interface AdminDashboard {
   totalUsers: number;
   totalProviders: number;
@@ -70,4 +72,14 @@ export interface Rental {
     provider: string;
     status: string;
   };
+}
+
+export interface DashboardSidebarProps {
+  title: string;
+  subtitle: string;
+  items: {
+    title: string;
+    href: string;
+    icon: LucideIcon;
+  }[];
 }

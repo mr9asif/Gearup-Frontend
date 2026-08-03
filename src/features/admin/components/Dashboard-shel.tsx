@@ -1,14 +1,19 @@
+"use client";
+
 import DashboardHeader from "./Dashboard-header";
-import DashboardSidebar from "./Dashboard-Sidebar";
 
 interface DashboardShellProps {
   children: React.ReactNode;
+  sidebar: React.ReactNode;
 }
 
-export default function DashboardShell({ children }: DashboardShellProps) {
+export default function DashboardShell({
+  children,
+  sidebar,
+}: DashboardShellProps) {
   return (
     <div className="flex h-screen overflow-hidden">
-      <DashboardSidebar />
+      {sidebar}
 
       <div className="flex flex-1 flex-col overflow-hidden">
         <DashboardHeader />

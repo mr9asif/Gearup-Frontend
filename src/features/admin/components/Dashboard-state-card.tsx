@@ -81,9 +81,7 @@ export default function DashboardStatCard({
               group-hover:translate-y-0
               group-hover:opacity-100
             "
-          >
-            View details →
-          </p>
+          ></p>
         </div>
 
         <div

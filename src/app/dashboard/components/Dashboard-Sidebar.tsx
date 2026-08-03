@@ -13,10 +13,14 @@ import {
 
 import { useAuthStore } from "@/store/auth.store";
 
-import { adminSidebarItems } from "./SideBar";
-import NavItem from "./nav-items";
+import NavItem from "../../../features/admin/components/nav-items";
+import { DashboardSidebarProps } from "../../../features/admin/types/admin.types";
 
-export default function DashboardSidebar() {
+export default function DashboardSidebar({
+  title,
+  subtitle,
+  items,
+}: DashboardSidebarProps) {
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -38,15 +42,15 @@ export default function DashboardSidebar() {
       {/* Logo */}
       <div className="flex h-16 items-center border-b px-6">
         <div>
-          <h2 className="text-xl font-bold tracking-tight">GearUp Admin</h2>
+          <h2 className="text-xl font-bold tracking-tight">{title}</h2>
 
-          <p className="text-xs text-muted-foreground">Administration Panel</p>
+          <p className="text-xs text-muted-foreground">{subtitle}</p>
         </div>
       </div>
 
       {/* Main Navigation */}
       <nav className="flex-1 space-y-2 overflow-y-auto p-4">
-        {adminSidebarItems.map((item) => (
+        {items.map((item) => (
           <NavItem key={item.href} {...item} />
         ))}
       </nav>
