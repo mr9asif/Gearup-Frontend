@@ -9,17 +9,18 @@ import { Category } from "../types/category.type";
 interface CategoryTableProps {
   categories: Category[];
   onEdit: (category: Category) => void;
+  onDelete: (category: Category) => void;
 }
 
 export default function CategoryTable({
   categories,
   onEdit,
+  onDelete,
 }: CategoryTableProps) {
   return (
     <div className="h-full overflow-hidden rounded-lg border">
       <div className="h-full overflow-auto">
         <table className="w-full">
-          {/* Sticky Header */}
           <thead className="sticky top-0 z-10 bg-background shadow-sm">
             <tr className="border-b">
               <th className="px-5 py-4 text-left">Name</th>
@@ -51,7 +52,11 @@ export default function CategoryTable({
                         <Pencil className="h-4 w-4" />
                       </Button>
 
-                      <Button size="icon" variant="destructive">
+                      <Button
+                        size="icon"
+                        variant="destructive"
+                        onClick={() => onDelete(category)}
+                      >
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>

@@ -28,7 +28,7 @@ export const categoryService = {
   },
 
   deleteCategory: async (id: string) => {
-    const response = await axiosInstance.delete(`/admin/categories/${id}`);
+    const response = await axiosInstance.delete(`/categories/${id}`);
 
     return response.data.data;
   },

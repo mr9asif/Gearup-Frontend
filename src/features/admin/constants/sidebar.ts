@@ -5,7 +5,6 @@ import {
   FolderTree,
   LayoutDashboard,
   Package,
-  Settings,
   Users,
 } from "lucide-react";
 
@@ -37,10 +36,10 @@ export const adminSidebarItems = [
   },
 ];
 
-export const adminBottomSidebarItems = [
-  {
-    title: "Settings",
-    href: "/dashboard/admin/settings",
-    icon: Settings,
-  },
-];
+// export const adminBottomSidebarItems = [
+//   {
+//     title: "Settings",
+//     href: "/dashboard/admin/settings",
+//     icon: Settings,
+//   },
+// ];

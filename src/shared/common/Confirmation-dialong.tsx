@@ -1,75 +1,57 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogMedia,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
-import { AlertTriangle } from "lucide-react";
-
-interface ConfirmationDialogProps {
+interface ConfirmDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
 
   confirmText?: string;
   cancelText?: string;
 
   loading?: boolean;
-  destructive?: boolean;
 
   onConfirm: () => void;
 }
 
-export default function ConfirmationDialog({
+export default function ConfirmDialog({
   open,
   onOpenChange,
-
-  title,
-  description,
-
-  confirmText = "Confirm",
+  title = "Are you sure?",
+  description = "This action cannot be undone.",
+  confirmText = "Delete",
   cancelText = "Cancel",
-
   loading = false,
-  destructive = false,
-
   onConfirm,
-}: ConfirmationDialogProps) {
+}: ConfirmDialogProps) {
   return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogMedia>
-            <AlertTriangle className="h-5 w-5 text-amber-500" />
-          </AlertDialogMedia>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>{title}</DialogTitle>
+        </DialogHeader>
 
-          <AlertDialogTitle>{title}</AlertDialogTitle>
+        <p className="text-sm text-muted-foreground">{description}</p>
 
-          <AlertDialogDescription>{description}</AlertDialogDescription>
-        </AlertDialogHeader>
+        <div className="mt-6 flex justify-end gap-2">
+          <Button variant="outline" onClick={() => onOpenChange(false)}>
+            {cancelText}
+          </Button>
 
-        <AlertDialogFooter>
-          <AlertDialogCancel disabled={loading}>{cancelText}</AlertDialogCancel>
-
-          <AlertDialogAction
-            disabled={loading}
-            variant={destructive ? "destructive" : "default"}
-            onClick={onConfirm}
-          >
+          <Button variant="destructive" disabled={loading} onClick={onConfirm}>
             {loading ? "Please wait..." : confirmText}
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }

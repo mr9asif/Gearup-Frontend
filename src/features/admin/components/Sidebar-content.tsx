@@ -1,11 +1,8 @@
 "use client";
 
-import { LogOut, Shield } from "lucide-react";
+import { Shield } from "lucide-react";
 
-import {
-  adminBottomSidebarItems,
-  adminSidebarItems,
-} from "../constants/sidebar";
+import { adminSidebarItems } from "../constants/sidebar";
 import NavItem from "./nav-items";
 
 export default function SidebarContent() {
@@ -30,7 +27,7 @@ export default function SidebarContent() {
       </nav>
 
       {/* Bottom Section */}
-      <div className="mt-auto border-t p-4">
+      {/* <div className="mt-auto border-t p-4">
         <nav className="space-y-1">
           {adminBottomSidebarItems.map((item) => (
             <NavItem
@@ -49,7 +46,7 @@ export default function SidebarContent() {
             <span>Logout</span>
           </button>
         </nav>
-      </div>
+      </div> */}
     </div>
   );
 }

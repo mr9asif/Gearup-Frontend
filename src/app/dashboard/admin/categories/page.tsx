@@ -7,14 +7,19 @@ import { Button } from "@/components/ui/button";
 
 import CategoryModal from "@/features/category/components/CategoryModal";
 import CategoryTable from "@/features/category/components/CategoryTable";
+import { useDeleteCategory } from "@/features/category/hooks/useDeleteCategory";
 import { useGetCategories } from "@/features/category/hooks/useGetCategories";
 import { Category } from "@/features/category/types/category.type";
+
 import AppPagination from "@/shared/common/AppPagination";
+import ConfirmDialog from "@/shared/common/Confirmation-dialong";
 
 export default function AdminCategoriesPage() {
   const [page, setPage] = useState(1);
 
   const [open, setOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
     null,
   );
@@ -23,6 +28,8 @@ export default function AdminCategoriesPage() {
     page,
     limit: 10,
   });
+
+  const { mutate: deleteCategory, isPending: isDeleting } = useDeleteCategory();
 
   if (isPending) {
     return <div>Loading...</div>;
@@ -64,6 +71,10 @@ export default function AdminCategoriesPage() {
             setSelectedCategory(category);
             setOpen(true);
           }}
+          onDelete={(category) => {
+            setSelectedCategory(category);
+            setDeleteOpen(true);
+          }}
         />
       </div>
 
@@ -75,11 +86,31 @@ export default function AdminCategoriesPage() {
         onPageChange={setPage}
       />
 
-      {/* Modal */}
+      {/* Create / Update */}
       <CategoryModal
         open={open}
         onOpenChange={setOpen}
         category={selectedCategory}
+      />
+
+      {/* Delete */}
+      <ConfirmDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        title="Delete Category"
+        description={`Are you sure you want to delete "${selectedCategory?.name}"? This action cannot be undone.`}
+        confirmText="Delete"
+        loading={isDeleting}
+        onConfirm={() => {
+          if (!selectedCategory) return;
+
+          deleteCategory(selectedCategory.id, {
+            onSuccess: () => {
+              setDeleteOpen(false);
+              setSelectedCategory(null);
+            },
+          });
+        }}
       />
     </div>
   );

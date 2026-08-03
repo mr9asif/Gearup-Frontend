@@ -2,31 +2,20 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 import { getErrorMessage } from "@/lib/getErrorMessage";
-import { categoryService } from "../service/category.api";
 
-export const useUpdateCategory = () => {
+import { profileService } from "../service/profile.api";
+
+export const useUpdateProfile = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-   mutationFn: ({
-  id,
-  name,
-  description,
-}: {
-  id: string;
-  name: string;
-  description: string;
-}) =>
-  categoryService.updateCategory(id, {
-    name,
-    description,
-  }),
+    mutationFn: profileService.updateProfile,
 
     onSuccess: () => {
-      toast.success("Category updated successfully.");
+      toast.success("Profile updated successfully.");
 
       queryClient.invalidateQueries({
-        queryKey: ["admin-categories"],
+        queryKey: ["current-user"],
       });
     },
 

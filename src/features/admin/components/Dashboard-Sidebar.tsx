@@ -1,5 +1,9 @@
 "use client";
 
+import { useQueryClient } from "@tanstack/react-query";
+import { ChevronUp, LogOut, User } from "lucide-react";
+import { useRouter } from "next/navigation";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,11 +11,28 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { ChevronUp, LogOut, Settings } from "lucide-react";
+import { useAuthStore } from "@/store/auth.store";
+
 import { adminSidebarItems } from "./SideBar";
 import NavItem from "./nav-items";
 
 export default function DashboardSidebar() {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
+
+  const handleLogout = () => {
+    logout();
+
+    // Clear React Query cache
+    queryClient.clear();
+
+    // Redirect to home page
+    router.push("/");
+  };
+
   return (
     <aside className="hidden h-screen w-64 shrink-0 border-r bg-background lg:flex lg:flex-col">
       {/* Logo */}
@@ -36,15 +57,27 @@ export default function DashboardSidebar() {
           <DropdownMenuTrigger className="w-full outline-none">
             <div className="group flex items-center justify-between rounded-xl border bg-background p-3 transition-all duration-200 hover:border-primary/30 hover:bg-muted">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary font-semibold text-primary-foreground">
-                  A
+                <div className="h-10 w-10 overflow-hidden rounded-full bg-primary">
+                  {user?.profileImage ? (
+                    <img
+                      src={user.profileImage}
+                      alt={user.name}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center font-semibold text-primary-foreground">
+                      {user?.name?.charAt(0).toUpperCase() ?? "A"}
+                    </div>
+                  )}
                 </div>
 
                 <div className="text-left">
-                  <p className="text-sm font-semibold">Administrator</p>
+                  <p className="text-sm font-semibold">
+                    {user?.name ?? "Administrator"}
+                  </p>
 
                   <p className="text-xs text-muted-foreground">
-                    admin@gearup.com
+                    {user?.email ?? "admin@gearup.com"}
                   </p>
                 </div>
               </div>
@@ -54,12 +87,15 @@ export default function DashboardSidebar() {
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="end" className="mb-2 w-56">
-            <DropdownMenuItem>
-              <Settings className="mr-2 h-4 w-4" />
-              Settings
+            <DropdownMenuItem onClick={() => router.push("/profile")}>
+              <User className="mr-2 h-4 w-4" />
+              Profile
             </DropdownMenuItem>
 
-            <DropdownMenuItem className="text-red-500 focus:text-red-500">
+            <DropdownMenuItem
+              onClick={handleLogout}
+              className="text-red-500 focus:text-red-500"
+            >
               <LogOut className="mr-2 h-4 w-4" />
               Logout
             </DropdownMenuItem>
