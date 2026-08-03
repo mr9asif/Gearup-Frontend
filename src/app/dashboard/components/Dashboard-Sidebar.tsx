@@ -1,18 +1,18 @@
 "use client";
 
-import { useQueryClient } from "@tanstack/react-query";
-import { ChevronUp, LogOut, User } from "lucide-react";
-import { useRouter } from "next/navigation";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
 import { useAuthStore } from "@/store/auth.store";
+import { useQueryClient } from "@tanstack/react-query";
+import { ChevronUp, LogOut, User } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
+import Image from "next/image";
 import NavItem from "../../../features/admin/components/nav-items";
 import { DashboardSidebarProps } from "../../../features/admin/types/admin.types";
 
@@ -40,12 +40,25 @@ export default function DashboardSidebar({
   return (
     <aside className="hidden h-screen w-64 shrink-0 border-r bg-background lg:flex lg:flex-col">
       {/* Logo */}
-      <div className="flex h-16 items-center border-b px-6">
-        <div>
-          <h2 className="text-xl font-bold tracking-tight">{title}</h2>
+      {/* Logo */}
+      <div className="border-b">
+        <Link
+          href="/"
+          className="flex h-16 items-center gap-3 px-6 transition-colors hover:bg-muted/50"
+        >
+          <Image
+            src="/logo.png" // put your logo in public/logo.png
+            alt="GearUp"
+            width={42}
+            height={42}
+          />
 
-          <p className="text-xs text-muted-foreground">{subtitle}</p>
-        </div>
+          <div>
+            <h2 className="text-xl font-bold tracking-tight">GearUp</h2>
+
+            <p className="text-xs text-muted-foreground">{subtitle}</p>
+          </div>
+        </Link>
       </div>
 
       {/* Main Navigation */}

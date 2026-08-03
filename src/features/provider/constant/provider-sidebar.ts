@@ -19,8 +19,8 @@ export const providerSidebarItems = [
     icon: Package,
   },
   {
-    title: "Bookings",
-    href: "/dashboard/provider/bookings",
+    title: "Manage Bookings",
+    href: "/dashboard/provider/orders",
     icon: CalendarDays,
   },
   {

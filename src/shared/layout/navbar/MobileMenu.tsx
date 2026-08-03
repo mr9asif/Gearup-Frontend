@@ -1,15 +1,17 @@
 "use client";
 
-import { Menu } from "lucide-react";
+import { ChevronRight, Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+
 import { Logo } from "./Logo";
 
 type NavItem = {
   label: string;
   href: string;
+  icon: React.ElementType;
 };
 
 type MobileMenuProps = {
@@ -22,17 +24,21 @@ export function MobileMenu({ items }: MobileMenuProps) {
   return (
     <div className="lg:hidden">
       <Sheet>
-        <SheetTrigger className="flex h-10 w-10 items-center justify-center rounded-md transition-colors hover:bg-accent">
-          <Menu className="h-5 w-5" />
+        <SheetTrigger className="flex h-10 w-10 items-center justify-center rounded-lg transition-colors hover:bg-muted">
+          <Menu className="h-6 w-6" />
         </SheetTrigger>
 
-        <SheetContent side="left" className="w-72">
-          <div className="mt-6 mb-8 flex justify-center">
+        <SheetContent side="left" className="w-[320px] p-0">
+          {/* Logo */}
+          <div className="border-b p-6">
             <Logo />
           </div>
 
-          <nav className="flex flex-col gap-2 px-2">
+          {/* Navigation */}
+          <nav className="space-y-2 p-4">
             {items.map((item) => {
+              const Icon = item.icon;
+
               const isActive =
                 pathname === item.href || pathname.startsWith(`${item.href}/`);
 
@@ -40,13 +46,19 @@ export function MobileMenu({ items }: MobileMenuProps) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`rounded-lg px-4 py-3 text-base font-medium transition-colors ${
+                  className={`flex items-center justify-between rounded-xl px-4 py-3 transition-all ${
                     isActive
                       ? "bg-primary text-primary-foreground"
-                      : "hover:bg-muted hover:text-primary"
+                      : "hover:bg-muted"
                   }`}
                 >
-                  {item.label}
+                  <div className="flex items-center gap-3">
+                    <Icon className="h-5 w-5" />
+
+                    <span>{item.label}</span>
+                  </div>
+
+                  <ChevronRight className="h-4 w-4 opacity-60" />
                 </Link>
               );
             })}

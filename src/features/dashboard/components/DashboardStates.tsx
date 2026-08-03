@@ -78,7 +78,7 @@ export default function DashboardStats() {
           </div>
 
           <Link
-            href="/gears"
+            href="/gear"
             className="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 font-medium text-black transition hover:scale-105"
           >
             Browse Gear

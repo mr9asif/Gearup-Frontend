@@ -69,7 +69,13 @@ export function GearCard({ gear, variant = "customer" }: GearCardProps) {
         <div className="flex gap-2">
           <Button
             className="flex-1"
-            onClick={() => router.push(`/gear/${gear.id}`)}
+            onClick={() =>
+              router.push(
+                variant === "provider"
+                  ? `/dashboard/provider/gears/${gear.id}`
+                  : `/gear/${gear.id}`,
+              )
+            }
           >
             View Details
           </Button>

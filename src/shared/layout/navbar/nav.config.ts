@@ -1,70 +1,30 @@
-export type NavItem = {
-  label: string;
-  href: string;
-};
+import { CircleHelp, Compass, HomeIcon, Info, Shapes } from "lucide-react";
 
-export const guestNav: NavItem[] = [
+export const publicNav = [
+  {
+    label: "Home",
+    href: "/",
+    icon: HomeIcon,
+  },
+
   {
     label: "Browse Gear",
     href: "/gear",
-  },
-
-  {
-    label: "About",
-    href: "/about",
-  },
-];
-
-export const customerNav: NavItem[] = [
-  {
-    label: "Browse Gear",
-    href: "/gear",
-  },
-  {
-    label: "Payments",
-    href: "/dashboard/customer/payments",
-  },
-
-  {
-    label: "My Rentals",
-    href: "/dashboard/customer/rentals",
-  },
-  {
-    label: "My Reviews",
-    href: "/dashboard/customer/reviews",
-  },
-];
-
-export const providerNav: NavItem[] = [
-  {
-    label: "My Gear",
-    href: "/dashboard/provider/gears",
-  },
-  {
-    label: "Bookings",
-    href: "/dashboard/provider/orders",
-  },
-  {
-    label: "Add Gear",
-    href: "/dashboard/provider/gears/create",
-  },
-];
-
-export const adminNav: NavItem[] = [
-  {
-    label: "Users",
-    href: "/dashboard/admin/users",
-  },
-  {
-    label: "Gear",
-    href: "/dashboard/admin/gears",
-  },
-  {
-    label: "Orders",
-    href: "/dashboard/admin/orders",
+    icon: Compass,
   },
   {
     label: "Categories",
-    href: "/dashboard/admin/categories",
+    href: "/categories",
+    icon: Shapes,
+  },
+  {
+    label: "How It Works",
+    href: "/how-it-works",
+    icon: CircleHelp,
+  },
+  {
+    label: "About Us",
+    href: "/about",
+    icon: Info,
   },
 ];

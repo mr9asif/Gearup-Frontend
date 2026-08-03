@@ -1,9 +1,4 @@
-import {
-  CalendarClock,
-  LayoutDashboard,
-  PackageSearch,
-  Star,
-} from "lucide-react";
+import { CalendarClock, LayoutDashboard, Star } from "lucide-react";
 
 export const customerSidebarItems = [
   {
@@ -16,11 +11,7 @@ export const customerSidebarItems = [
     href: "/dashboard/customer/rentals",
     icon: CalendarClock,
   },
-  {
-    title: "Browse Gears",
-    href: "/gear",
-    icon: PackageSearch,
-  },
+
   {
     title: "My Reviews",
     href: "/dashboard/customer/reviews",
