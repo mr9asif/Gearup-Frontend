@@ -5,7 +5,7 @@ export const categoryService = {
     const response = await axiosInstance.get("/categories", {
       params,
     });
-
+    console.log(response.data);
     return response.data.data.data;
   },
 

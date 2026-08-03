@@ -1,8 +1,7 @@
 "use client";
 
+import { ArrowRight, PlayCircle, ShieldCheck, Star } from "lucide-react";
 import Link from "next/link";
-
-import { ArrowRight, PlayCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
@@ -10,78 +9,103 @@ export function HeroSection() {
   return (
     <section className="relative overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-primary/5 via-background to-background" />
+      <div className="absolute inset-0 -z-20 bg-gradient-to-b from-primary/5 via-background to-background" />
 
-      <div className="container mx-auto px-4 py-20 md:py-28">
-        <div className="grid items-center gap-16 lg:grid-cols-2">
-          {/* Left */}
-          <div>
-            <span className="inline-flex items-center rounded-full border bg-primary/10 px-4 py-1 text-sm font-medium text-primary">
-              ⚡ Rent Sports Equipment Instantly
-            </span>
+      <div className="absolute -left-24 top-10 -z-10 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
 
-            <h1 className="mt-6 text-5xl font-extrabold leading-tight tracking-tight md:text-6xl">
-              Play More.
-              <br />
-              <span className="text-primary">Own Less.</span>
-            </h1>
+      <div className="absolute right-0 top-0 -z-10 h-96 w-96 rounded-full bg-blue-500/5 blur-3xl" />
 
-            <p className="mt-6 max-w-xl text-lg text-muted-foreground">
-              Rent premium sports and outdoor equipment from trusted providers
-              near you. Affordable, secure and hassle-free.
-            </p>
+      <div className="mx-auto flex max-w-6xl flex-col items-center px-6 py-24 text-center lg:py-32">
+        {/* Badge */}
+        <div className="inline-flex items-center rounded-full border bg-background/80 px-5 py-2 text-sm font-medium shadow-sm backdrop-blur">
+          ⚡ {"Bangladesh's Trusted Sports Rental Platform"}
+        </div>
 
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Link href="/gear">
-                <Button size="lg">
-                  Browse Gear
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
+        {/* Heading */}
+        <h1 className="mt-8 max-w-5xl text-5xl font-black leading-tight tracking-tight md:text-7xl">
+          Rent Premium
+          <span className="text-primary"> Sports Equipment </span>
+          For Every Adventure
+        </h1>
 
-              <Link href="/register?role=provider">
-                <Button size="lg" variant="outline">
-                  <PlayCircle className="mr-2 h-4 w-4" />
-                  Become a Provider
-                </Button>
-              </Link>
-            </div>
+        {/* Description */}
+        <p className="mt-8 max-w-3xl text-lg leading-8 text-muted-foreground md:text-xl">
+          Football, cricket, cycling, camping, hiking and outdoor gear from
+          trusted local providers. Affordable, secure and available whenever you
+          need it.
+        </p>
 
-            <div className="mt-12 flex flex-wrap gap-10">
-              <div>
-                <h3 className="text-3xl font-bold">1000+</h3>
-                <p className="text-sm text-muted-foreground">Happy Customers</p>
-              </div>
+        {/* Buttons */}
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <Link href="/gear">
+            <Button size="lg" className="h-14 rounded-xl px-8 text-base">
+              Browse Gear
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </Link>
 
-              <div>
-                <h3 className="text-3xl font-bold">500+</h3>
-                <p className="text-sm text-muted-foreground">Sports Gear</p>
-              </div>
+          <Link href="/register?role=provider">
+            <Button
+              size="lg"
+              variant="outline"
+              className="h-14 rounded-xl px-8 text-base"
+            >
+              <PlayCircle className="mr-2 h-5 w-5" />
+              Become a Provider
+            </Button>
+          </Link>
+        </div>
 
-              <div>
-                <h3 className="text-3xl font-bold">50+</h3>
-                <p className="text-sm text-muted-foreground">
-                  Trusted Providers
-                </p>
-              </div>
-            </div>
+        {/* Rating */}
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground">
+          <div className="flex items-center gap-1">
+            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
           </div>
 
-          {/* Right */}
-          <div className="relative flex justify-center">
-            <div className="flex h-[500px] w-full max-w-[560px] items-center justify-center rounded-3xl border bg-gradient-to-br from-primary/15 via-primary/5 to-background shadow-2xl">
-              <div className="text-center">
-                <div className="text-8xl">🏕️</div>
+          <span>4.9/5 Rating</span>
 
-                <h3 className="mt-4 text-2xl font-bold">
-                  Sports & Outdoor Gear
-                </h3>
+          <span>•</span>
 
-                <p className="mt-2 text-muted-foreground">
-                  Hero illustration will be added here later.
-                </p>
-              </div>
-            </div>
+          <span>1000+ Happy Customers</span>
+        </div>
+
+        {/* Trust */}
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm font-medium">
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="h-5 w-5 text-primary" />
+            Verified Providers
+          </div>
+
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="h-5 w-5 text-primary" />
+            Secure Payments
+          </div>
+
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="h-5 w-5 text-primary" />
+            Instant Booking
+          </div>
+        </div>
+
+        {/* Statistics */}
+        <div className="mt-16 grid w-full max-w-4xl gap-5 sm:grid-cols-3">
+          <div className="rounded-2xl border bg-background/70 p-6 shadow-lg backdrop-blur">
+            <h3 className="text-4xl font-bold text-primary">1000+</h3>
+            <p className="mt-2 text-muted-foreground">Successful Rentals</p>
+          </div>
+
+          <div className="rounded-2xl border bg-background/70 p-6 shadow-lg backdrop-blur">
+            <h3 className="text-4xl font-bold text-primary">500+</h3>
+            <p className="mt-2 text-muted-foreground">Sports Equipment</p>
+          </div>
+
+          <div className="rounded-2xl border bg-background/70 p-6 shadow-lg backdrop-blur">
+            <h3 className="text-4xl font-bold text-primary">50+</h3>
+            <p className="mt-2 text-muted-foreground">Trusted Providers</p>
           </div>
         </div>
       </div>

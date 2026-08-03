@@ -1,12 +1,14 @@
 "use client";
 
-import { FolderOpen } from "lucide-react";
+import { ArrowRight, FolderOpen } from "lucide-react";
+import { useRouter } from "next/navigation";
 
-import { Card, CardContent } from "@/components/ui/card";
 import { useGetCategories } from "@/features/category/hooks/useGetCategories";
 import { Category } from "@/features/category/types/category.type";
 
 export default function CategoriesPage() {
+  const router = useRouter();
+
   const { data: categories, isLoading } = useGetCategories();
 
   if (isLoading) {
@@ -32,30 +34,47 @@ export default function CategoriesPage() {
   }
 
   return (
-    <div className="container mx-auto max-w-7xl py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold">Categories</h1>
+    <section className="mx-auto max-w-7xl py-12">
+      {/* Heading */}
+      <div className="mb-14 text-center">
+        <p className="font-medium text-primary">Categories</p>
 
-        <p className="text-muted-foreground">
-          Browse sports equipment categories.
+        <h1 className="mt-3 text-4xl font-bold">Explore Sports Categories</h1>
+
+        <p className="mt-4 text-muted-foreground">
+          Browse equipment by category and discover your next adventure.
         </p>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
         {categories.map((category: Category) => (
-          <Card key={category.id} className="transition-all hover:shadow-lg">
-            <CardContent className="flex flex-col gap-3 p-6">
-              <FolderOpen className="text-primary h-10 w-10" />
+          <div
+            key={category.id}
+            onClick={() => router.push(`/gear?categoryId=${category.id}`)}
+            className="group cursor-pointer rounded-3xl border bg-card p-8 transition-all duration-300 hover:-translate-y-2 hover:border-primary/30 hover:shadow-2xl"
+          >
+            {/* Icon */}
+            <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 transition-all duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground">
+              <FolderOpen className="h-8 w-8" />
+            </div>
 
-              <h2 className="text-xl font-semibold">{category.name}</h2>
+            {/* Title */}
+            <h2 className="text-2xl font-bold">{category.name}</h2>
 
-              <p className="text-muted-foreground line-clamp-3 text-sm">
-                {category.description}
-              </p>
-            </CardContent>
-          </Card>
+            {/* Description */}
+            <p className="mt-3 line-clamp-2 text-muted-foreground">
+              {category.description ||
+                "Explore premium sports equipment in this category."}
+            </p>
+
+            {/* Button */}
+            <div className="mt-8 flex items-center font-medium text-primary">
+              Browse Equipment
+              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-2" />
+            </div>
+          </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
