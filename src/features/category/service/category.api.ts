@@ -6,7 +6,7 @@ export const categoryService = {
       params,
     });
 
-    return response.data.data.data;
+    return response.data.data;
   },
   // For Home / Public
   getAllCategories: async () => {
