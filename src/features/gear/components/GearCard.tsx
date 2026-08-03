@@ -83,7 +83,7 @@ export function GearCard({ gear, variant = "customer" }: GearCardProps) {
           {variant === "customer" ? (
             <Button
               className="flex-1"
-              onClick={() => router.push(`/rent/${gear.id}`)}
+              onClick={() => router.push(`/rentals/${gear.id}`)}
             >
               Rent Now
             </Button>

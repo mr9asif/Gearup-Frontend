@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  ChevronRight,
-  LayoutDashboard,
-  LogOut,
-  Settings,
-  User,
-} from "lucide-react";
+import { ChevronRight, LayoutDashboard, LogOut, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -120,11 +114,11 @@ export function UserMenu() {
           <ChevronRight className="h-4 w-4 opacity-50" />
         </DropdownMenuItem>
 
-        <DropdownMenuItem onClick={() => router.push("/settings")}>
+        {/* <DropdownMenuItem onClick={() => router.push("/settings")}>
           <Settings className="mr-3 h-4 w-4" />
           <span className="flex-1">Settings</span>
           <ChevronRight className="h-4 w-4 opacity-50" />
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
 
         <DropdownMenuSeparator />
 

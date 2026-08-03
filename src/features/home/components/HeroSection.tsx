@@ -24,7 +24,7 @@ export function HeroSection() {
         {/* Heading */}
         <h1 className="mt-8 max-w-5xl text-5xl font-black leading-tight tracking-tight md:text-7xl">
           Rent Premium
-          <span className="text-primary"> Sports Equipment </span>
+          <span className="text-primary"> Variety Equipment </span>
           For Every Adventure
         </h1>
 
