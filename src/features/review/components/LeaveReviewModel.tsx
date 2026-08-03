@@ -2,7 +2,7 @@
 
 import { Dialog } from "@base-ui/react/dialog";
 
-import { Review } from "../types/review.type";
+import { EditableReview } from "../types/review.type";
 import ReviewForm from "./ReviewForm";
 
 interface LeaveReviewModalProps {
@@ -11,7 +11,7 @@ interface LeaveReviewModalProps {
 
   rentalId?: string;
 
-  review?: Review;
+  review?: EditableReview;
 }
 
 export default function LeaveReviewModal({

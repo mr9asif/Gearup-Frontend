@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useGetCategories } from "@/features/category/hooks/useGetCategories";
+import { Category } from "@/features/category/types/category.type";
 import { Gear } from "@/features/gear/types/gear.type";
 import { useUpdateGear } from "../hooks/useUpdateGear";
 import ImageUploader from "./ImageUploader";
@@ -127,7 +128,7 @@ export default function GearForm({ mode, initialData }: GearFormProps) {
                   </SelectTrigger>
 
                   <SelectContent>
-                    {categories.map((category) => (
+                    {categories.map((category: Category) => (
                       <SelectItem key={category.id} value={category.id}>
                         {category.name}
                       </SelectItem>
@@ -222,12 +223,12 @@ export default function GearForm({ mode, initialData }: GearFormProps) {
 
           {mode === "edit" &&
             files.length === 0 &&
-            initialData?.images?.length > 0 && (
+            (initialData?.images?.length ?? 0) > 0 && (
               <div className="space-y-3">
                 <label className="text-sm font-medium">Current Images</label>
 
                 <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-                  {initialData.images.map((image, index) => (
+                  {(initialData?.images ?? []).map((image, index) => (
                     <img
                       key={index}
                       src={image}

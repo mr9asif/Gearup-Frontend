@@ -17,9 +17,6 @@ export function GearPage() {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
 
-  const [available, setAvailable] = useState("");
-  const [sort, setSort] = useState("");
-
   const limit = 100; // load enough items since pagination is removed
 
   const { data, isPending, isError } = useGear({
@@ -28,9 +25,6 @@ export function GearPage() {
     brand,
     minPrice: minPrice ? Number(minPrice) : undefined,
     maxPrice: maxPrice ? Number(maxPrice) : undefined,
-    isAvailable: available === "" ? undefined : available === "true",
-    sortBy: sort ? "pricePerDay" : undefined,
-    sortOrder: sort === "asc" ? "asc" : sort === "desc" ? "desc" : undefined,
     limit,
   });
 
@@ -49,15 +43,12 @@ export function GearPage() {
     const values = gears.map((gear) => gear.brand);
     return [...new Set(values)];
   }, [gears]);
-
   const resetFilters = () => {
     setSearch("");
     setCategoryId("");
     setBrand("");
     setMinPrice("");
     setMaxPrice("");
-    setAvailable("");
-    setSort("");
   };
 
   return (
@@ -84,15 +75,12 @@ export function GearPage() {
       <FilterBar
         category={categoryId}
         brand={brand}
-        sort={sort}
         minPrice={minPrice}
         maxPrice={maxPrice}
         categories={categories}
         brands={brands}
         onCategoryChange={setCategoryId}
         onBrandChange={setBrand}
-        onAvailableChange={setAvailable}
-        onSortChange={setSort}
         onMinPriceChange={setMinPrice}
         onMaxPriceChange={setMaxPrice}
         onReset={resetFilters}
