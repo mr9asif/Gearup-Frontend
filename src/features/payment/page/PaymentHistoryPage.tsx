@@ -2,6 +2,7 @@
 
 import { CreditCard } from "lucide-react";
 
+import AppLoader from "@/shared/common/AppLoader";
 import PaymentCard from "../components/PaymentCard";
 import { usePayments } from "../hooks/usePayments";
 import { Payment } from "../types/payment.types";
@@ -10,11 +11,7 @@ export default function PaymentHistoryPage() {
   const { data: payments, isLoading } = usePayments();
 
   if (isLoading) {
-    return (
-      <div className="flex h-80 items-center justify-center">
-        Loading payment history...
-      </div>
-    );
+    return <AppLoader />;
   }
 
   if (!payments?.length) {

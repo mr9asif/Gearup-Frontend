@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { useGetCategories } from "@/features/category/hooks/useGetCategories";
 import { Category } from "@/features/category/types/category.type";
+import AppLoader from "@/shared/common/AppLoader";
 
 export default function CategoriesPage() {
   const router = useRouter();
@@ -12,11 +13,7 @@ export default function CategoriesPage() {
   const { data: categories, isLoading } = useGetCategories();
 
   if (isLoading) {
-    return (
-      <div className="flex h-80 items-center justify-center">
-        Loading categories...
-      </div>
-    );
+    return <AppLoader />;
   }
 
   if (!categories?.length) {

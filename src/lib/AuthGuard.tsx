@@ -4,6 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { PropsWithChildren, useEffect } from "react";
 
 import { useCurrentUser } from "@/features/auth/hooks/use-current-user";
+import AppLoader from "@/shared/common/AppLoader";
 
 export default function AuthGuard({ children }: PropsWithChildren) {
   const router = useRouter();
@@ -18,11 +19,7 @@ export default function AuthGuard({ children }: PropsWithChildren) {
   }, [isLoading, user, pathname, router]);
 
   if (isLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        Loading...
-      </div>
-    );
+    return <AppLoader />;
   }
 
   if (!user) {

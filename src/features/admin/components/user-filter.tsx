@@ -13,8 +13,8 @@ import {
 
 interface UserFiltersProps {
   search: string;
-  role: string;
-  status: string;
+  role: string | null;
+  status: string | null;
 
   setSearch: (value: string) => void;
   setRole: (value: string | null) => void;

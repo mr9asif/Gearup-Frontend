@@ -2,11 +2,14 @@
 
 import { GearCard } from "@/features/gear/components/GearCard";
 import { useMyGear } from "@/features/gear/hooks/useMyGear";
+import AppLoader from "@/shared/common/AppLoader";
 
 export default function ProviderGearPage() {
   const { data: gears, isLoading, isError } = useMyGear();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) {
+    return <AppLoader />;
+  }
 
   if (isError) return <div>Something went wrong.</div>;
 

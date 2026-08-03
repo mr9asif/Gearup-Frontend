@@ -3,6 +3,7 @@
 import { useAuth } from "@/ hooks/useAuth";
 import { useGearDetails } from "@/features/gear/hooks/useGear";
 import { Review } from "@/features/gear/types/gear.type";
+import AppLoader from "@/shared/common/AppLoader";
 import {
   BadgeCheck,
   Boxes,
@@ -28,9 +29,7 @@ export default function GearDetailsPage() {
   const [selectedImage, setSelectedImage] = useState(0);
 
   if (isLoading) {
-    return (
-      <div className="container mx-auto py-20 text-center">Loading...</div>
-    );
+    return <AppLoader />;
   }
 
   if (!gear) {

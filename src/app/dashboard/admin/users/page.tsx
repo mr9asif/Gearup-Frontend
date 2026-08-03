@@ -36,9 +36,9 @@ export default function UsersPage() {
             search={search}
             setSearch={setSearch}
             role={role}
-            setRole={setRole}
+            setRole={setRole as (value: string | null) => void}
             status={status}
-            setStatus={setStatus}
+            setStatus={setStatus as (value: string | null) => void}
           />
         </div>
       </div>

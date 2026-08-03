@@ -8,6 +8,7 @@ import { adminSidebarItems } from "@/features/admin/constants/sidebar";
 import { useCurrentUser } from "@/features/auth/hooks/use-current-user";
 import { customerSidebarItems } from "@/features/customer/constants/customer.sidebar";
 import { providerSidebarItems } from "@/features/provider/constant/provider-sidebar";
+import AppLoader from "@/shared/common/AppLoader";
 import DashboardSidebar from "./Dashboard-Sidebar";
 
 interface ProtectedDashboardProps {
@@ -37,11 +38,7 @@ export default function ProtectedDashboard({
   }, [user, isLoading, role, router]);
 
   if (isLoading) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        Loading...
-      </div>
-    );
+    return <AppLoader />;
   }
 
   if (!user || user.role !== role) {

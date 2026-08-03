@@ -11,6 +11,7 @@ import { useDeleteCategory } from "@/features/category/hooks/useDeleteCategory";
 import { useGetCategories } from "@/features/category/hooks/useGetCategories";
 import { Category } from "@/features/category/types/category.type";
 
+import AppLoader from "@/shared/common/AppLoader";
 import AppPagination from "@/shared/common/AppPagination";
 import ConfirmDialog from "@/shared/common/Confirmation-dialong";
 
@@ -32,7 +33,7 @@ export default function AdminCategoriesPage() {
   const { mutate: deleteCategory, isPending: isDeleting } = useDeleteCategory();
 
   if (isPending) {
-    return <div>Loading...</div>;
+    return <AppLoader />;
   }
 
   if (isError) {

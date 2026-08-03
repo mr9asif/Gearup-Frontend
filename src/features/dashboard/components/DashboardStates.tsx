@@ -4,26 +4,14 @@ import { motion } from "framer-motion";
 import { ArrowRight, Bike, CheckCircle2, CreditCard, Star } from "lucide-react";
 import Link from "next/link";
 
+import AppLoader from "@/shared/common/AppLoader";
 import { useCustomerDashboard } from "../hooks/useCustomerDashboard";
 
 export default function DashboardStats() {
   const { data, isLoading } = useCustomerDashboard();
 
   if (isLoading) {
-    return (
-      <div className="space-y-8">
-        <div className="h-44 animate-pulse rounded-3xl bg-muted" />
-
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {[1, 2, 3, 4].map((item) => (
-            <div
-              key={item}
-              className="h-44 animate-pulse rounded-3xl bg-muted"
-            />
-          ))}
-        </div>
-      </div>
-    );
+    return <AppLoader />;
   }
 
   if (!data) return null;

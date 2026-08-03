@@ -19,6 +19,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import AppLoader from "@/shared/common/AppLoader";
 import UserActionMenu from "./user-action-menu";
 import UserStatusBadge from "./user-status-badge";
 
@@ -39,9 +40,7 @@ interface Props {
 
 export default function UserTable({ users, isLoading }: Props) {
   if (isLoading) {
-    return (
-      <div className="rounded-xl border p-10 text-center">Loading users...</div>
-    );
+    return <AppLoader />;
   }
 
   if (!users.length) {

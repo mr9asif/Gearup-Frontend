@@ -6,6 +6,7 @@ import { useGearDetails } from "@/features/gear/hooks/useGear";
 
 import GearPreview from "@/features/rental/components/GearPreview";
 import RentalForm from "@/features/rental/components/RentalForm";
+import AppLoader from "@/shared/common/AppLoader";
 
 export default function RentPage() {
   const { id } = useParams<{ id: string }>();
@@ -14,9 +15,7 @@ export default function RentPage() {
   console.log("rental", gear);
 
   if (isLoading) {
-    return (
-      <div className="container mx-auto py-20 text-center">Loading...</div>
-    );
+    return <AppLoader />;
   }
 
   if (!gear) {

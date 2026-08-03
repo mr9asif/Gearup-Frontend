@@ -15,12 +15,13 @@ import {
 
 import DashboardStatCard from "@/features/admin/components/Dashboard-state-card";
 import { useAdminDashboard } from "@/features/admin/hooks/useAdminDashboard";
+import AppLoader from "@/shared/common/AppLoader";
 
 export default function AdminDashboardPage() {
   const { data, isLoading } = useAdminDashboard();
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <AppLoader />;
   }
 
   if (!data) {

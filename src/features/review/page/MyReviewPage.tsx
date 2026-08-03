@@ -14,18 +14,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import AppLoader from "@/shared/common/AppLoader";
 
 export default function MyReviewsPage() {
   const { data: reviews, isLoading } = useMyReviews();
 
   const [selectedReview, setSelectedReview] = useState<Review | null>(null);
-
   if (isLoading) {
-    return (
-      <div className="flex h-80 items-center justify-center">
-        Loading reviews...
-      </div>
-    );
+    return <AppLoader />;
   }
 
   if (!reviews?.length) {

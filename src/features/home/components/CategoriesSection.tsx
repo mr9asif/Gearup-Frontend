@@ -7,9 +7,8 @@ import { Category } from "@/features/category/types/category.type";
 
 export function CategoriesSection() {
   const { data, isLoading } = useGetAllCategories();
-  console.log(data);
+
   const categories = data ?? [];
-  console.log(categories);
 
   return (
     <section className="py-24">
