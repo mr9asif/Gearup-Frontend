@@ -69,6 +69,7 @@ export default function ProviderOrderCard({ order }: ProviderOrderCardProps) {
           {/* Right */}
 
           <div className="flex flex-col gap-3">
+            {/* PLACED */}
             {order.status === "PLACED" && (
               <>
                 <Button
@@ -82,39 +83,61 @@ export default function ProviderOrderCard({ order }: ProviderOrderCardProps) {
                 <Button
                   disabled={isRejecting || isAccepting}
                   onClick={() => acceptRental(order.id)}
+                  className="bg-amber-500 text-white hover:bg-amber-600"
                 >
                   Accept
                 </Button>
               </>
             )}
 
+            {/* CONFIRMED */}
             {order.status === "CONFIRMED" && (
-              <Button disabled>Waiting for Payment</Button>
+              <Button
+                disabled
+                className="bg-blue-600 text-white hover:bg-blue-600 disabled:opacity-100"
+              >
+                Waiting for Payment
+              </Button>
             )}
 
+            {/* PAID */}
             {order.status === "PAID" && (
               <Button
                 disabled={isStarting}
                 onClick={() => startRental(order.id)}
+                className="bg-violet-600 text-white hover:bg-violet-700"
               >
-                {" "}
-                {isStarting ? "Starting..." : "Start Rental"}
+                {isStarting ? "Starting..." : "Mark Picked Up"}
               </Button>
             )}
 
+            {/* PICKED UP */}
             {order.status === "PICKED_UP" && (
               <Button
                 disabled={completing}
                 onClick={() => completeRental(order.id)}
+                className="bg-emerald-600 text-white hover:bg-emerald-700"
               >
                 {completing ? "Completing..." : "Mark Returned"}
               </Button>
             )}
 
-            {order.status === "RETURNED" && <Button disabled>Completed</Button>}
+            {/* RETURNED */}
+            {order.status === "RETURNED" && (
+              <Button
+                disabled
+                className="bg-slate-600 text-white hover:bg-slate-600 disabled:opacity-100"
+              >
+                Completed
+              </Button>
+            )}
 
+            {/* CANCELLED */}
             {order.status === "CANCELLED" && (
-              <Button variant="secondary" disabled>
+              <Button
+                disabled
+                className="bg-red-600 text-white hover:bg-red-600 disabled:opacity-100"
+              >
                 Cancelled
               </Button>
             )}

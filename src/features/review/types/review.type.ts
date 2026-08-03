@@ -27,3 +27,9 @@ export interface UpdateReviewPayload {
   rating: number;
   comment: string;
 }
+
+export interface EditableReview {
+  id: string;
+  rating: number;
+  comment: string;
+}

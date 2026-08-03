@@ -3,7 +3,6 @@
 import { format } from "date-fns";
 import { CalendarDays, Package2 } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useCreatePayment } from "@/features/payment/hooks/useCreatePayment";
@@ -12,14 +11,20 @@ import { useCustomerRentals } from "../hooks/useCustomerRental";
 import { RentalOrder } from "../types/rental.type";
 
 import LeaveReviewModal from "@/features/review/components/LeaveReviewModel";
-import { Review } from "@/features/review/types/review.type";
-
+import { EditableReview } from "@/features/review/types/review.type";
+export interface ReviewFormData {
+  id: string;
+  rating: number;
+  comment: string;
+}
 export default function RentalPage() {
   const { data: orders, isLoading } = useCustomerRentals();
   const { mutate: createPayment, isPending } = useCreatePayment();
   const [reviewRentalId, setReviewRentalId] = useState<string | null>(null);
 
-  const [editingReview, setEditingReview] = useState<Review | null>(null);
+  const [editingReview, setEditingReview] = useState<EditableReview | null>(
+    null,
+  );
   if (isLoading) {
     return (
       <div className="flex h-80 items-center justify-center">Loading...</div>
@@ -38,7 +43,6 @@ export default function RentalPage() {
       </div>
     );
   }
-
   return (
     <div className="space-y-8">
       <div>
@@ -69,7 +73,7 @@ export default function RentalPage() {
                         {order.gear.name}
                       </h2>
 
-                      <Badge>{order.status}</Badge>
+                      <pre>{order.status}</pre>
                     </div>
 
                     <p className="text-muted-foreground">
@@ -104,44 +108,79 @@ export default function RentalPage() {
                 {/* Right */}
 
                 <div className="flex flex-col gap-3">
-                  {order.status === "PLACED" && (
-                    <Button disabled>Waiting for Approval</Button>
-                  )}
+                  {/* Right */}
 
-                  {order.status === "CONFIRMED" && !order.payment && (
-                    <Button
-                      disabled={isPending}
-                      onClick={() => createPayment(order.id)}
-                    >
-                      {isPending ? "Redirecting..." : "Pay Now"}
-                    </Button>
-                  )}
-
-                  {order.status === "PAID" && (
-                    <Button disabled>Waiting for Start Rental</Button>
-                  )}
-                  {order.status === "PICKED_UP" && (
-                    <Button disabled>Rental In Progress</Button>
-                  )}
-
-                  {order.status === "CANCELLED" && (
-                    <Button variant="destructive" disabled>
-                      Order Cancelled
-                    </Button>
-                  )}
-                  {order.status === "RETURNED" &&
-                    (order.review ? (
+                  <div className="flex flex-col gap-3">
+                    {/* PLACED */}
+                    {order.status === "PLACED" && (
                       <Button
-                        variant="outline"
-                        onClick={() => setEditingReview(order.review)}
+                        disabled
+                        className="bg-amber-500 text-white hover:bg-amber-500 disabled:opacity-100"
                       >
-                        Edit Review
+                        Waiting for Approval
                       </Button>
-                    ) : (
-                      <Button onClick={() => setReviewRentalId(order.id)}>
-                        Leave Review
+                    )}
+
+                    {/* CONFIRMED */}
+                    {order.status === "CONFIRMED" && !order.payment && (
+                      <Button
+                        disabled={isPending}
+                        onClick={() => createPayment(order.id)}
+                        className="bg-blue-600 text-white hover:bg-blue-700"
+                      >
+                        {isPending ? "Redirecting..." : "Pay Now"}
                       </Button>
-                    ))}
+                    )}
+
+                    {/* PAID */}
+                    {order.status === "PAID" && (
+                      <Button
+                        disabled
+                        className="bg-violet-600 text-white hover:bg-violet-600 disabled:opacity-100"
+                      >
+                        Waiting for Pickup
+                      </Button>
+                    )}
+
+                    {/* PICKED UP */}
+                    {order.status === "PICKED_UP" && (
+                      <Button
+                        disabled
+                        className="bg-emerald-600 text-white hover:bg-emerald-600 disabled:opacity-100"
+                      >
+                        Rental In Progress
+                      </Button>
+                    )}
+
+                    {/* RETURNED */}
+                    {order.status === "RETURNED" &&
+                      (order.review ? (
+                        <Button
+                          variant="outline"
+                          className="border-slate-400 text-slate-700 hover:bg-slate-100"
+                          onClick={() => setEditingReview(order.review ?? null)}
+                        >
+                          Edit Review
+                        </Button>
+                      ) : (
+                        <Button
+                          className="bg-slate-600 text-white hover:bg-slate-700"
+                          onClick={() => setReviewRentalId(order.id)}
+                        >
+                          Leave Review
+                        </Button>
+                      ))}
+
+                    {/* CANCELLED */}
+                    {order.status === "CANCELLED" && (
+                      <Button
+                        disabled
+                        className="bg-red-600 text-white hover:bg-red-600 disabled:opacity-100"
+                      >
+                        Order Cancelled
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </div>
             </CardContent>

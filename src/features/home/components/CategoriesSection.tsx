@@ -2,11 +2,11 @@
 
 import { Shapes } from "lucide-react";
 
-import { useGetCategories } from "@/features/category/hooks/useGetCategories";
+import { useGetAllCategories } from "@/features/category/hooks/useGetAllCategories";
 import { Category } from "@/features/category/types/category.type";
 
 export function CategoriesSection() {
-  const { data, isLoading } = useGetCategories();
+  const { data, isLoading } = useGetAllCategories();
   console.log(data);
   const categories = data ?? [];
   console.log(categories);

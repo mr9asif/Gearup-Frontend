@@ -6,9 +6,14 @@ export const categoryService = {
       params,
     });
     console.log(response.data);
+    return response.data.data;
+  },
+  // For Home / Public
+  getAllCategories: async () => {
+    const response = await axiosInstance.get("/categories");
+
     return response.data.data.data;
   },
-
   createCategory: async (payload: { name: string; description: string }) => {
     const response = await axiosInstance.post("/categories", payload);
 
