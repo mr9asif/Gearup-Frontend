@@ -4,6 +4,7 @@ import { Shapes } from "lucide-react";
 
 import { useGetAllCategories } from "@/features/category/hooks/useGetAllCategories";
 import { Category } from "@/features/category/types/category.type";
+import AppLoader from "@/shared/common/AppLoader";
 
 export function CategoriesSection() {
   const { data, isLoading } = useGetAllCategories();
@@ -27,7 +28,7 @@ export function CategoriesSection() {
 
         {isLoading ? (
           <div className="text-center text-muted-foreground">
-            Loading categories...
+            <AppLoader />;
           </div>
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

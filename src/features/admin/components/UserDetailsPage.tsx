@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 
 import { useUserDetails } from "@/features/admin/hooks/useUserDetails";
+import AppLoader from "@/shared/common/AppLoader";
 
 export default function UserDetailsPage() {
   const params = useParams();
@@ -17,11 +18,7 @@ export default function UserDetailsPage() {
   const { data: user, isPending, isError } = useUserDetails(id);
 
   if (isPending) {
-    return (
-      <div className="flex h-[70vh] items-center justify-center">
-        Loading user details...
-      </div>
-    );
+    return <AppLoader />;
   }
 
   if (isError || !user) {

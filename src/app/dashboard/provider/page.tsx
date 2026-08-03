@@ -2,6 +2,7 @@
 
 import DashboardStatCard from "@/features/admin/components/Dashboard-state-card";
 import { useProviderDashboard } from "@/features/provider/hooks/useProviderDashboard";
+import AppLoader from "@/shared/common/AppLoader";
 import {
   CalendarClock,
   Clock3,
@@ -14,13 +15,9 @@ import {
 export default function ProviderDashboardPage() {
   const { data, isLoading } = useProviderDashboard();
 
-  if (isLoading) {
-    return (
-      <div className="flex h-[70vh] items-center justify-center">
-        Loading...
-      </div>
-    );
-  }
+if (isLoading) {
+  return <AppLoader />;
+}
 
   if (!data) {
     return (

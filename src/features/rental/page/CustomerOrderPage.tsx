@@ -12,6 +12,7 @@ import { RentalOrder } from "../types/rental.type";
 
 import LeaveReviewModal from "@/features/review/components/LeaveReviewModel";
 import { EditableReview } from "@/features/review/types/review.type";
+import AppLoader from "@/shared/common/AppLoader";
 export interface ReviewFormData {
   id: string;
   rating: number;
@@ -26,9 +27,7 @@ export default function RentalPage() {
     null,
   );
   if (isLoading) {
-    return (
-      <div className="flex h-80 items-center justify-center">Loading...</div>
-    );
+    return <AppLoader />;
   }
 
   if (!orders?.length) {
