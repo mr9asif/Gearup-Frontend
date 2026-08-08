@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
+import { ArrowLeft } from "lucide-react";
 import { useUpdateProfile } from "../hooks/useUpdateProfile";
 import { Profile } from "../types/profile.type";
 import ProfileAvatar from "./ProfileAvater";
@@ -62,6 +63,17 @@ export default function ProfileForm({ profile }: ProfileFormProps) {
   return (
     <Card>
       <CardContent className="p-8">
+        <div className="mb-6">
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={() => (window.location.href = "/")}
+            className="gap-2 px-0 text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Home
+          </Button>
+        </div>
         <div className="grid gap-10 lg:grid-cols-[260px_1fr]">
           <ProfileAvatar
             image={profile.profileImage}
