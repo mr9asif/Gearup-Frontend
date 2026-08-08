@@ -1,4 +1,5 @@
 import { CategoriesSection } from "@/features/home/components/CategoriesSection";
+import { FAQSection } from "@/features/home/components/FAQSection";
 import { FeaturedGearSection } from "@/features/home/components/FeaturedGearSection";
 import { HeroSection } from "@/features/home/components/HeroSection";
 import { TestimonialsSection } from "@/features/home/components/Testimonial/TestimonialSection";
@@ -16,6 +17,7 @@ export default function HomePage() {
       <HowItWorksPage />
       <WhyChooseSection />
       <TestimonialsSection />
+      <FAQSection />
       <Footer />
     </>
   );

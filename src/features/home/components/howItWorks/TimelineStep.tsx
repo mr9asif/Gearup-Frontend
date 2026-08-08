@@ -21,7 +21,7 @@ export function TimelineStep({
   reverse = false,
   isLast = false,
 }: TimelineStepProps) {
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   const isInView = useInView(ref, {
     amount: 0.5,
@@ -30,29 +30,56 @@ export function TimelineStep({
 
   const Icon = step.icon;
 
+  /*
+   * Shared card style
+   * Same visual language as the GearUp Category cards.
+   */
+  const cardClass = `
+    group relative overflow-hidden
+    rounded-3xl
+    border border-border
+    bg-card
+    p-6
+    shadow-sm
+    backdrop-blur-md
+
+    transition-all duration-300
+
+    hover:-translate-y-1
+    hover:border-primary/30
+    hover:shadow-xl
+    hover:shadow-primary/10
+
+    hover:bg-gradient-to-br
+    hover:from-primary/[0.04]
+    hover:via-background
+    hover:to-blue-500/[0.04]
+
+    dark:hover:from-primary/[0.08]
+    dark:hover:via-background
+    dark:hover:to-blue-500/[0.08]
+
+    lg:p-8
+  `;
+
   return (
     <div
       ref={ref}
-      className="
-relative
-grid
-grid-cols-[1fr_28px_24px_28px_1fr]
-items-center
-gap-x-1
-py-6
-sm:grid-cols-[1fr_36px_28px_36px_1fr]
-sm:gap-x-2
-sm:py-8
-lg:grid-cols-[1fr_70px_40px_70px_1fr]
-lg:gap-x-0
-lg:py-10
-"
+      className="relative grid grid-cols-[1fr_auto_1fr] gap-6 lg:gap-10"
     >
-      {/* LEFT CARD */}
+      {/* =====================================================
+          LEFT SIDE
+      ====================================================== */}
+
       {!reverse ? (
         <>
+          {/* LEFT CARD */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{
+              opacity: 0,
+              y: 40,
+              scale: 0.98,
+            }}
             animate={{
               opacity: isInView ? 1 : 0.45,
               y: isInView ? 0 : 20,
@@ -60,122 +87,167 @@ lg:py-10
             }}
             transition={{ duration: 0.5 }}
             className={cn(
-              `
-rounded-xl
-border
-bg-background/80
-p-3
-backdrop-blur-xl
-sm:p-4
-lg:rounded-2xl
-lg:p-6
-`,
-              isInView
-                ? "border-primary/20 shadow-xl shadow-primary/10"
-                : "border-border",
+              cardClass,
+              isInView && "border-primary/30 shadow-lg shadow-primary/10",
             )}
           >
-            <div className="mb-5 flex items-center justify-between">
+            {/* Hover Glow */}
+            <div
+              className="
+                pointer-events-none
+                absolute -right-16 -top-16
+                h-32 w-32
+                rounded-full
+                bg-gradient-to-br
+                from-primary/20
+                via-emerald-500/10
+                to-blue-500/20
+                opacity-0
+                blur-3xl
+                transition-opacity duration-500
+                group-hover:opacity-100
+              "
+            />
+
+            {/* Header */}
+            <div className="relative mb-5 flex items-center justify-between">
+              {/* Step */}
               <span
-                className="rounded-full
-border
-px-2
-py-0.5
-text-[8px]
-uppercase
-tracking-widest
-text-muted-foreground
-sm:px-2.5
-sm:text-[9px]
-lg:px-3
-lg:py-1
-lg:text-[10px]"
+                className="
+                  rounded-full
+                  border border-primary/10
+                  bg-primary/[0.05]
+                  px-3 py-1
+                  text-[10px]
+                  font-medium
+                  uppercase
+                  tracking-widest
+                  text-primary
+                "
               >
                 Step {step.id.toString().padStart(2, "0")}
               </span>
 
+              {/* Icon */}
               <div
-                className={cn(
-                  "flex h-7 w-7 items-center justify-center rounded-md transition-all sm:h-8 sm:w-8  lg:h-10 lg:w-10 lg:rounded-lg",
-                  isInView
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-muted text-muted-foreground",
-                )}
+                className="
+                  flex h-11 w-11
+                  items-center justify-center
+                  rounded-xl
+                  bg-primary/10
+                  text-primary
+
+                  transition-all duration-300
+
+                  group-hover:bg-gradient-to-br
+                  group-hover:from-primary
+                  group-hover:via-emerald-500
+                  group-hover:to-blue-500
+                  group-hover:text-white
+                  group-hover:scale-105
+                  group-hover:shadow-lg
+                  group-hover:shadow-primary/20
+                "
               >
-                <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 lg:h-5 lg:w-5" />
+                <Icon className="h-5 w-5" />
               </div>
             </div>
 
-            <h3
-              className="
-mb-1
-text-sm
-font-semibold
-leading-5
-sm:text-base
-lg:mb-2
-lg:text-xl
-"
-            >
+            {/* Title */}
+            <h3 className="relative text-xl font-bold tracking-tight">
               {step.title}
             </h3>
 
-            <p
-              className="
-text-[10px]
-leading-4
-text-muted-foreground
-sm:text-xs
-sm:leading-5
-lg:text-sm
-lg:leading-7
-"
-            >
+            {/* Description */}
+            <p className="relative mt-3 text-sm leading-7 text-muted-foreground">
               {step.description}
             </p>
+
+            {/* Bottom Gradient */}
+            <div
+              className="
+                absolute bottom-0 left-0
+                h-0.5 w-0
+                bg-gradient-to-r
+                from-primary
+                via-emerald-500
+                to-blue-500
+                transition-all duration-500
+                group-hover:w-full
+              "
+            />
           </motion.div>
 
-          {/* connector */}
-          <div className="relative flex items-center justify-end">
+          {/* LEFT CONNECTOR */}
+          <div className="relative flex items-center">
             <motion.div
               initial={{ scaleX: 0 }}
-              animate={{ scaleX: isInView ? 1 : 0 }}
+              animate={{
+                scaleX: isInView ? 1 : 0,
+              }}
               transition={{ duration: 0.4 }}
               className="
-h-[2px]
-w-full
-origin-right
-bg-primary
-"
+                h-[2px]
+                w-full
+                origin-right
+                bg-gradient-to-r
+                from-primary/20
+                via-primary
+                to-primary
+              "
             />
           </div>
         </>
       ) : (
         <>
+          {/* Empty Left Space */}
           <div />
           <div />
         </>
       )}
 
-      {/* CENTER */}
+      {/* =====================================================
+          CENTER TIMELINE
+      ====================================================== */}
+
       <div className="relative flex justify-center">
+        {/* Vertical Line */}
         {!isLast && (
-          <div className="absolute top-5 h-40 w-px bg-border">
+          <div className="absolute top-5 h-full w-px bg-border">
             <motion.div
               initial={{ height: 0 }}
-              animate={{ height: isInView ? "100%" : 0 }}
+              animate={{
+                height: isInView ? "100%" : 0,
+              }}
               transition={{ duration: 0.6 }}
-              className="w-full origin-top bg-primary"
+              className="
+                w-full
+                origin-top
+                bg-gradient-to-b
+                from-primary
+                via-emerald-500
+                to-blue-500
+              "
             />
           </div>
         )}
 
+        {/* Timeline Dot */}
         <motion.div
           animate={{
             scale: isInView ? 1.1 : 1,
           }}
+          transition={{ duration: 0.3 }}
           className={cn(
-            "relative z-10 flex h-6 w-6 items-center justify-center rounded-full border-2 bg-background sm:h-7 sm:w-7 lg:h-9 lg:w-9",
+            `
+              relative z-10
+              flex h-9 w-9
+              items-center justify-center
+              rounded-full
+              border-2
+              bg-background
+              transition-all duration-300
+            `,
             isInView
               ? "border-primary shadow-lg shadow-primary/20"
               : "border-border",
@@ -183,27 +255,48 @@ bg-primary
         >
           <div
             className={cn(
-              "h-1.5 w-1.5 rounded-full sm:h-2 sm:w-2 lg:h-2.5 lg:w-2.5",
-              isInView ? "bg-primary" : "bg-muted-foreground",
+              "h-2.5 w-2.5 rounded-full transition-all duration-300",
+              isInView
+                ? "bg-gradient-to-r from-primary via-emerald-500 to-blue-500"
+                : "bg-muted-foreground",
             )}
           />
         </motion.div>
       </div>
 
-      {/* RIGHT SIDE */}
+      {/* =====================================================
+          RIGHT SIDE
+      ====================================================== */}
+
       {reverse ? (
         <>
+          {/* RIGHT CONNECTOR */}
           <div className="relative flex items-center">
             <motion.div
               initial={{ scaleX: 0 }}
-              animate={{ scaleX: isInView ? 1 : 0 }}
+              animate={{
+                scaleX: isInView ? 1 : 0,
+              }}
               transition={{ duration: 0.4 }}
-              className="h-[2px] w-full origin-left bg-primary"
+              className="
+                h-[2px]
+                w-full
+                origin-left
+                bg-gradient-to-r
+                from-primary
+                via-primary
+                to-primary/20
+              "
             />
           </div>
 
+          {/* RIGHT CARD */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{
+              opacity: 0,
+              y: 40,
+              scale: 0.98,
+            }}
             animate={{
               opacity: isInView ? 1 : 0.45,
               y: isInView ? 0 : 20,
@@ -211,39 +304,100 @@ bg-primary
             }}
             transition={{ duration: 0.5 }}
             className={cn(
-              "rounded-2xl border bg-background/80 p-6 backdrop-blur-xl",
-              isInView
-                ? "border-primary/20 shadow-xl shadow-primary/10"
-                : "border-border",
+              cardClass,
+              isInView && "border-primary/30 shadow-lg shadow-primary/10",
             )}
           >
-            <div className="mb-5 flex items-center justify-between">
-              <span className="rounded-full border px-3 py-1 text-[10px] uppercase tracking-widest text-muted-foreground">
+            {/* Hover Glow */}
+            <div
+              className="
+                pointer-events-none
+                absolute -right-16 -top-16
+                h-32 w-32
+                rounded-full
+                bg-gradient-to-br
+                from-primary/20
+                via-emerald-500/10
+                to-blue-500/20
+                opacity-0
+                blur-3xl
+                transition-opacity duration-500
+                group-hover:opacity-100
+              "
+            />
+
+            {/* Header */}
+            <div className="relative mb-5 flex items-center justify-between">
+              {/* Step */}
+              <span
+                className="
+                  rounded-full
+                  border border-primary/10
+                  bg-primary/[0.05]
+                  px-3 py-1
+                  text-[10px]
+                  font-medium
+                  uppercase
+                  tracking-widest
+                  text-primary
+                "
+              >
                 Step {step.id.toString().padStart(2, "0")}
               </span>
 
+              {/* Icon */}
               <div
-                className={cn(
-                  "flex h-10 w-10 items-center justify-center rounded-lg transition-all",
-                  isInView
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-muted text-muted-foreground",
-                )}
+                className="
+                  flex h-11 w-11
+                  items-center justify-center
+                  rounded-xl
+                  bg-primary/10
+                  text-primary
+
+                  transition-all duration-300
+
+                  group-hover:bg-gradient-to-br
+                  group-hover:from-primary
+                  group-hover:via-emerald-500
+                  group-hover:to-blue-500
+                  group-hover:text-white
+                  group-hover:scale-105
+                  group-hover:shadow-lg
+                  group-hover:shadow-primary/20
+                "
               >
                 <Icon className="h-5 w-5" />
               </div>
             </div>
 
-            <h3 className="mb-2 text-xl font-semibold">{step.title}</h3>
+            {/* Title */}
+            <h3 className="relative text-xl font-bold tracking-tight">
+              {step.title}
+            </h3>
 
-            <p className="text-sm leading-7 text-muted-foreground">
+            {/* Description */}
+            <p className="relative mt-3 text-sm leading-7 text-muted-foreground">
               {step.description}
             </p>
+
+            {/* Bottom Gradient */}
+            <div
+              className="
+                absolute bottom-0 left-0
+                h-0.5 w-0
+                bg-gradient-to-r
+                from-primary
+                via-emerald-500
+                to-blue-500
+                transition-all duration-500
+                group-hover:w-full
+              "
+            />
           </motion.div>
         </>
       ) : (
         <>
-          <div />
+          {/* Empty Right Space */}
           <div />
         </>
       )}
