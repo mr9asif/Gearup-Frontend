@@ -9,44 +9,107 @@ import { Gear } from "../types/gear.type";
 
 import { FilterBar } from "./FilterBar";
 import { GearGrid } from "./GearGrid";
+import { Pagination } from "./Pagination";
 import { SearchBar } from "./SearchBar";
 
 export function GearPage() {
+  // =====================================================
+  // FILTER STATES
+  // =====================================================
+
   const [search, setSearch] = useState("");
   const [categoryId, setCategoryId] = useState("");
+  console.log("SELECTED CATEGORY ID:", categoryId);
   const [brand, setBrand] = useState("");
 
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
 
-  const limit = 100;
+  // =====================================================
+  // PAGINATION
+  // =====================================================
+
+  const [page, setPage] = useState(1);
+
+  // 9 gears per page
+  // 3 cards per row on desktop
+  const limit = 9;
+
+  // =====================================================
+  // FETCH GEARS
+  // =====================================================
 
   const { data, isPending, isError } = useGear({
     search,
-    categoryId,
+    category: categoryId,
     brand,
     minPrice: minPrice ? Number(minPrice) : undefined,
     maxPrice: maxPrice ? Number(maxPrice) : undefined,
+    page,
     limit,
   });
 
-  const gears = useMemo<Gear[]>(() => {
-    if (!data) return [];
+  // =====================================================
+  // IMPORTANT
+  //
+  // API RESPONSE:
+  //
+  // data
+  // └── data
+  //     ├── meta
+  //     └── data
+  //
+  // =====================================================
 
-    return Array.isArray(data.data) ? data.data : [];
-  }, [data]);
+  const paginatedData = data?.data;
+
+  // =====================================================
+  // GEAR DATA
+  // =====================================================
+
+  const gears = useMemo<Gear[]>(() => {
+    if (!paginatedData) return [];
+
+    return Array.isArray(paginatedData.data) ? paginatedData.data : [];
+  }, [paginatedData]);
+
+  // =====================================================
+  // CATEGORIES
+  // =====================================================
 
   const categories = useMemo(() => {
-    const values = gears.map((gear) => gear.category.name);
+    const values = gears.map((gear) => gear.category).filter(Boolean);
 
-    return [...new Set(values)];
+    const uniqueCategories = new Map();
+
+    values.forEach((category) => {
+      uniqueCategories.set(category.id, category);
+    });
+
+    return Array.from(uniqueCategories.values());
   }, [gears]);
+
+  // =====================================================
+  // BRANDS
+  // =====================================================
 
   const brands = useMemo(() => {
-    const values = gears.map((gear) => gear.brand);
+    const values = gears.map((gear) => gear.brand).filter(Boolean);
 
     return [...new Set(values)];
   }, [gears]);
+
+  // =====================================================
+  // PAGINATION META
+  // =====================================================
+
+  const totalPages = paginatedData?.meta?.totalPage ?? 1;
+
+  const totalItems = paginatedData?.meta?.total ?? gears.length;
+
+  // =====================================================
+  // RESET FILTERS
+  // =====================================================
 
   const resetFilters = () => {
     setSearch("");
@@ -54,13 +117,19 @@ export function GearPage() {
     setBrand("");
     setMinPrice("");
     setMaxPrice("");
+
+    setPage(1);
   };
 
+  // =====================================================
+  // RENDER
+  // =====================================================
+
   return (
-    <main className="h-[calc(100vh-5rem)] overflow-hidden">
+    <main className="w-full">
       {/* =====================================================
           BROWSE HEADER + SEARCH
-          ===================================================== */}
+      ===================================================== */}
 
       <section className="h-[145px] border-b border-border/60 bg-background/95 backdrop-blur-xl">
         <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
@@ -81,6 +150,7 @@ export function GearPage() {
               value={search}
               onSearch={(value) => {
                 setSearch(value);
+                setPage(1);
               }}
             />
           </div>
@@ -89,16 +159,16 @@ export function GearPage() {
 
       {/* =====================================================
           MAIN CONTENT
-          ===================================================== */}
+      ===================================================== */}
 
-      <div className="mx-auto h-[calc(100vh-5rem-145px)] max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto h-[calc(100dvh-145px)] max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid h-full gap-6 lg:grid-cols-[250px_minmax(0,1fr)] lg:gap-8">
           {/* =================================================
-              DESKTOP FILTER SIDEBAR
-              ================================================= */}
+              DESKTOP FILTER
+          ================================================= */}
 
           <aside className="hidden min-h-0 lg:block">
-            <div className="h-full py-6">
+            <div className="h-full py-5">
               <div className="h-full overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm">
                 <FilterBar
                   category={categoryId}
@@ -107,10 +177,22 @@ export function GearPage() {
                   maxPrice={maxPrice}
                   categories={categories}
                   brands={brands}
-                  onCategoryChange={setCategoryId}
-                  onBrandChange={setBrand}
-                  onMinPriceChange={setMinPrice}
-                  onMaxPriceChange={setMaxPrice}
+                  onCategoryChange={(value) => {
+                    setCategoryId(value);
+                    setPage(1);
+                  }}
+                  onBrandChange={(value) => {
+                    setBrand(value);
+                    setPage(1);
+                  }}
+                  onMinPriceChange={(value) => {
+                    setMinPrice(value);
+                    setPage(1);
+                  }}
+                  onMaxPriceChange={(value) => {
+                    setMaxPrice(value);
+                    setPage(1);
+                  }}
                   onReset={resetFilters}
                 />
               </div>
@@ -119,15 +201,15 @@ export function GearPage() {
 
           {/* =================================================
               GEAR CONTENT
-              ================================================= */}
+          ================================================= */}
 
           <section className="flex min-h-0 min-w-0 flex-col">
-            {/* ===============================================
+            {/* =================================================
                 MOBILE FILTER
-                =============================================== */}
+            ================================================= */}
 
-            <div className="shrink-0 py-4 lg:hidden">
-              <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
+            <div className="shrink-0 py-3 lg:hidden">
+              <div className="rounded-2xl border border-border bg-card p-3 shadow-sm">
                 <FilterBar
                   category={categoryId}
                   brand={brand}
@@ -135,20 +217,32 @@ export function GearPage() {
                   maxPrice={maxPrice}
                   categories={categories}
                   brands={brands}
-                  onCategoryChange={setCategoryId}
-                  onBrandChange={setBrand}
-                  onMinPriceChange={setMinPrice}
-                  onMaxPriceChange={setMaxPrice}
+                  onCategoryChange={(value) => {
+                    setCategoryId(value);
+                    setPage(1);
+                  }}
+                  onBrandChange={(value) => {
+                    setBrand(value);
+                    setPage(1);
+                  }}
+                  onMinPriceChange={(value) => {
+                    setMinPrice(value);
+                    setPage(1);
+                  }}
+                  onMaxPriceChange={(value) => {
+                    setMaxPrice(value);
+                    setPage(1);
+                  }}
                   onReset={resetFilters}
                 />
               </div>
             </div>
 
-            {/* ===============================================
+            {/* =================================================
                 RESULT HEADER
-                =============================================== */}
+            ================================================= */}
 
-            <div className="shrink-0 py-3 lg:py-4">
+            <div className="shrink-0 py-2 lg:py-2">
               {!isPending && !isError && (
                 <div className="flex items-center justify-between">
                   <div>
@@ -162,17 +256,17 @@ export function GearPage() {
                   </div>
 
                   <span className="text-sm text-muted-foreground">
-                    {gears.length} Items Found
+                    {totalItems} Items Found
                   </span>
                 </div>
               )}
             </div>
 
-            {/* ===============================================
+            {/* =================================================
                 ONLY GEAR AREA SCROLLS
-                =============================================== */}
+            ================================================= */}
 
-            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pr-1">
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pr-2 pb-0">
               {/* Loading */}
               {isPending && (
                 <div className="flex min-h-[400px] items-center justify-center">
@@ -197,24 +291,18 @@ export function GearPage() {
               {!isPending && !isError && <GearGrid gears={gears} />}
             </div>
 
-            {/* ===============================================
+            {/* =================================================
                 PAGINATION
-                =============================================== */}
+            ================================================= */}
 
-            {!isPending && !isError && (
-              <div className="shrink-0 border-t border-border/60 bg-background/95 px-2 py-3 backdrop-blur-xl">
-                <div className="flex items-center justify-center">
-                  {/* 
-                    YOUR CUSTOM PAGINATION GOES HERE
-
-                    Example:
-
-                    <GearPagination
-                      currentPage={currentPage}
-                      totalPages={totalPages}
-                      onPageChange={setCurrentPage}
-                    />
-                  */}
+            {!isPending && !isError && totalPages > 1 && (
+              <div className="shrink-0 bg-background px-2 py-1">
+                <div className="flex justify-center">
+                  <Pagination
+                    currentPage={page}
+                    totalPages={totalPages}
+                    onPageChange={setPage}
+                  />
                 </div>
               </div>
             )}

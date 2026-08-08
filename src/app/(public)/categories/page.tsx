@@ -3,14 +3,15 @@
 import { ArrowRight, FolderOpen } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { useGetCategories } from "@/features/category/hooks/useGetCategories";
+import { useGetAllCategories } from "@/features/category/hooks/useGetAllCategories";
 import { Category } from "@/features/category/types/category.type";
 import AppLoader from "@/shared/common/AppLoader";
 
 export default function CategoriesPage() {
   const router = useRouter();
 
-  const { data: categories, isLoading } = useGetCategories();
+  const { data: categories, isLoading } = useGetAllCategories();
+  console.log("cate", categories);
 
   if (isLoading) {
     return <AppLoader />;

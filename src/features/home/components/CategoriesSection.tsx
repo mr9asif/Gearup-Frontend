@@ -3,10 +3,10 @@
 import {
   ArrowRight,
   Bike,
+  CookingPot,
   Dumbbell,
-  Footprints,
+  GlassWaterIcon,
   Goal,
-  Shapes,
   TentTree,
 } from "lucide-react";
 import Link from "next/link";
@@ -17,11 +17,11 @@ import AppLoader from "@/shared/common/AppLoader";
 
 const categoryIcons = [
   Goal, // Football
-  Dumbbell, // Gym / Fitness
-  Bike, // Cycling
+  CookingPot, // Gym / Fitness
+  GlassWaterIcon, // Cycling
   TentTree, // Camping
-  Footprints, // Hiking
-  Shapes, // Fallback
+  Dumbbell, // Hiking
+  Bike, // Fallback
 ];
 
 export function CategoriesSection() {

@@ -12,6 +12,7 @@ import { ChevronUp, LogOut, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+import { axiosInstance } from "@/services/axios";
 import Image from "next/image";
 import NavItem from "../../../features/admin/components/nav-items";
 import { DashboardSidebarProps } from "../../../features/admin/types/admin.types";
@@ -27,14 +28,23 @@ export default function DashboardSidebar({
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    try {
+      // Call backend logout route
+      await axiosInstance.post("/auth/logout");
 
-    // Clear React Query cache
-    queryClient.clear();
+      // Clear frontend auth state
+      logout();
 
-    // Redirect to home page
-    router.push("/");
+      // Clear React Query cache
+      queryClient.clear();
+
+      // Redirect
+      router.replace("/");
+      router.refresh();
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   return (

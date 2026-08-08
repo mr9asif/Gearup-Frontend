@@ -36,7 +36,7 @@ export function HeroSection() {
           Hero Content
       ========================== */}
 
-      <div className="mx-auto flex max-w-6xl flex-col items-center px-6 pb-12 pt-8 text-center lg:pb-14 lg:pt-10">
+      <div className="mx-auto flex max-w-6xl flex-col items-center px-6 pb-10 pt-24 text-center lg:pb-12 lg:pt-24">
         {/* Badge */}
         <div className="inline-flex items-center rounded-full border border-primary/15 bg-background/80 px-5 py-2 text-sm font-medium shadow-sm backdrop-blur-md">
           <span className="mr-1.5">⚡</span>

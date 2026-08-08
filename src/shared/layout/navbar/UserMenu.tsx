@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import { axiosInstance } from "@/services/axios";
 import { useAuthStore } from "@/store/auth.store";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -41,13 +42,23 @@ export function UserMenu() {
         ? "/dashboard/provider"
         : "/dashboard/customer";
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    try {
+      // Call backend logout route
+      await axiosInstance.post("/auth/logout");
 
-    // Clear all React Query cache
-    queryClient.clear();
+      // Clear frontend auth state
+      logout();
 
-    router.push("/");
+      // Clear React Query cache
+      queryClient.clear();
+
+      // Redirect
+      router.replace("/");
+      router.refresh();
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
 
   return (

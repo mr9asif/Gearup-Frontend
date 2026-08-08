@@ -32,8 +32,13 @@ export default function GearForm({ mode, initialData }: GearFormProps) {
   const createGear = useCreateGear();
   const updateGear = useUpdateGear();
 
-  const { data: categories = [] } = useGetCategories();
-  console.log(categories);
+  const { data: categoriesData } = useGetCategories();
+
+  const categories: Category[] = Array.isArray(categoriesData?.data)
+    ? categoriesData.data
+    : [];
+
+  console.log("Categories:", categories);
 
   // Store selected image files
   const [files, setFiles] = useState<File[]>([]);

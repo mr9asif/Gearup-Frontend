@@ -6,7 +6,7 @@ import { Gear } from "../types/gear.type";
 
 export interface GetGearParams {
   search?: string;
-  categoryId?: string;
+  category?: string;
   brand?: string;
   minPrice?: number;
   maxPrice?: number;
@@ -22,12 +22,14 @@ type ProviderGearResponse = {
 };
 export const gearService = {
   getAllGear: async (params: GetGearParams) => {
+    console.log("🚀 PARAMS SENT TO BACKEND:", params);
     const { data } = await axiosInstance.get<
       ApiResponse<PaginatedResponse<Gear>>
     >("/gear/all", {
       params,
     });
 
+    console.log("📦 RESPONSE FROM BACKEND:", data);
     return data;
   },
 

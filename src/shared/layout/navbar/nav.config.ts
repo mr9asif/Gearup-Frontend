@@ -1,4 +1,11 @@
-import { CircleHelp, Compass, HomeIcon, Info, Shapes } from "lucide-react";
+import {
+  CircleHelp,
+  Compass,
+  HomeIcon,
+  Info,
+  LayoutDashboard,
+  Shapes,
+} from "lucide-react";
 
 export const publicNav = [
   {
@@ -6,7 +13,6 @@ export const publicNav = [
     href: "/",
     icon: HomeIcon,
   },
-
   {
     label: "Browse Gear",
     href: "/gear",
@@ -28,3 +34,23 @@ export const publicNav = [
     icon: Info,
   },
 ];
+
+export const dashboardNav = {
+  CUSTOMER: {
+    label: "Dashboard",
+    href: "/dashboard/customer",
+    icon: LayoutDashboard,
+  },
+
+  PROVIDER: {
+    label: "Dashboard",
+    href: "/dashboard/provider",
+    icon: LayoutDashboard,
+  },
+
+  ADMIN: {
+    label: "Dashboard",
+    href: "/dashboard/admin",
+    icon: LayoutDashboard,
+  },
+};

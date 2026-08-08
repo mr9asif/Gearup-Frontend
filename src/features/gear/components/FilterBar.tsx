@@ -8,8 +8,10 @@ interface FilterBarProps {
   brand: string;
   minPrice: string;
   maxPrice: string;
-
-  categories: string[];
+  categories: {
+    id: string;
+    name: string;
+  }[];
   brands: string[];
 
   onCategoryChange: (value: string) => void;
@@ -34,8 +36,8 @@ export function FilterBar({
 }: FilterBarProps) {
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [brandOpen, setBrandOpen] = useState(false);
-
-  const selectedCategory = category || "Category";
+  const selectedCategory =
+    categories.find((item) => item.id === category)?.name || "Category";
   const selectedBrand = brand || "Brand";
 
   const handleCategoryChange = (value: string) => {
@@ -118,9 +120,9 @@ export function FilterBar({
           >
             <option value="">All Categories</option>
 
-            {categories.map((item) => (
-              <option key={item} value={item}>
-                {item}
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
               </option>
             ))}
           </select>
@@ -326,22 +328,18 @@ export function FilterBar({
 
                 {categories.map((item) => (
                   <button
-                    key={item}
+                    key={item.id}
                     type="button"
-                    onClick={() => handleCategoryChange(item)}
+                    onClick={() => handleCategoryChange(item.id)}
                     className={`
-                      w-full rounded-lg px-3 py-2
-                      text-left text-xs
-                      transition-colors
-                      hover:bg-primary/10
-                      ${
-                        category === item
-                          ? "bg-primary/10 font-medium text-primary"
-                          : ""
-                      }
-                    `}
+      w-full rounded-lg px-3 py-2
+      text-left text-xs
+      transition-colors
+      hover:bg-primary/10
+      ${category === item.id ? "bg-primary/10 font-medium text-primary" : ""}
+    `}
                   >
-                    {item}
+                    {item.name}
                   </button>
                 ))}
               </div>
