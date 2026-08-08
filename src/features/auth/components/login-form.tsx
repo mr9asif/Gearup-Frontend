@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { GoogleLogin } from "@react-oauth/google";
 import { AxiosError } from "axios";
 import { ArrowLeft, ShieldCheck, User, Users } from "lucide-react";
 import Link from "next/link";
@@ -20,7 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import { config } from "@/config";
-import { FaChrome } from "react-icons/fa6";
+import { useGoogleLogin } from "../hooks/use-google-login";
 import { useLogin } from "../hooks/use-login";
 import { LoginSchema, loginSchema } from "../schemas/login.schema";
 
@@ -56,7 +57,9 @@ const demoCredentials: Record<
 
 export default function LoginForm() {
   const router = useRouter();
+
   const login = useLogin();
+  const googleLogin = useGoogleLogin();
 
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect");
@@ -65,7 +68,7 @@ export default function LoginForm() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginSchema>({
+  } = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
@@ -159,8 +162,29 @@ export default function LoginForm() {
     );
   };
 
+  // ============================================
+  // Google Login
+  // ============================================
+
+  const handleGoogleSuccess = (credential: string) => {
+    googleLogin.mutate(credential, {
+      onSuccess: (res) => {
+        toast.success(res.message ?? "Google login successful!");
+
+        // Google login → Home
+        router.replace("/");
+      },
+
+      onError: (error) => {
+        const axiosError = error as AxiosError<ErrorResponse>;
+
+        toast.error(axiosError.response?.data.message ?? "Google login failed");
+      },
+    });
+  };
+
   return (
-    <Card className="w-full max-w-md border-border/60 shadow-xl">
+    <Card className="w-full max-w-md">
       {/* ============================================
           HEADER
       ============================================ */}
@@ -193,7 +217,7 @@ export default function LoginForm() {
             <button
               type="button"
               onClick={() => handleRoleLogin("CUSTOMER")}
-              disabled={login.isPending}
+              disabled={login.isPending || googleLogin.isPending}
               className="
                 flex flex-col items-center justify-center
                 gap-1.5 rounded-xl border
@@ -207,7 +231,6 @@ export default function LoginForm() {
               "
             >
               <User className="h-4 w-4" />
-
               <span>Customer</span>
             </button>
 
@@ -215,7 +238,7 @@ export default function LoginForm() {
             <button
               type="button"
               onClick={() => handleRoleLogin("PROVIDER")}
-              disabled={login.isPending}
+              disabled={login.isPending || googleLogin.isPending}
               className="
                 flex flex-col items-center justify-center
                 gap-1.5 rounded-xl border
@@ -229,7 +252,6 @@ export default function LoginForm() {
               "
             >
               <Users className="h-4 w-4" />
-
               <span>Provider</span>
             </button>
 
@@ -237,7 +259,7 @@ export default function LoginForm() {
             <button
               type="button"
               onClick={() => handleRoleLogin("ADMIN")}
-              disabled={login.isPending}
+              disabled={login.isPending || googleLogin.isPending}
               className="
                 flex flex-col items-center justify-center
                 gap-1.5 rounded-xl border
@@ -251,7 +273,6 @@ export default function LoginForm() {
               "
             >
               <ShieldCheck className="h-4 w-4" />
-
               <span>Admin</span>
             </button>
           </div>
@@ -312,7 +333,11 @@ export default function LoginForm() {
             )}
           </div>
 
-          <Button type="submit" className="w-full" disabled={login.isPending}>
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={login.isPending || googleLogin.isPending}
+          >
             {login.isPending ? "Signing In..." : "Sign In"}
           </Button>
         </form>
@@ -329,17 +354,24 @@ export default function LoginForm() {
           <div className="h-px flex-1 bg-border" />
         </div>
 
-        <Button
-          type="button"
-          variant="outline"
-          className="w-full"
-          onClick={() => {
-            toast.info("Google login will be connected next.");
-          }}
-        >
-          <FaChrome className="mr-2 h-4 w-4" />
-          Continue with Google
-        </Button>
+        <div className="flex justify-center">
+          <GoogleLogin
+            onSuccess={(credentialResponse) => {
+              const idToken = credentialResponse.credential;
+
+              if (!idToken) {
+                toast.error("Google ID token was not received.");
+                return;
+              }
+
+              handleGoogleSuccess(idToken);
+            }}
+            onError={() => {
+              toast.error("Google login failed.");
+            }}
+            useOneTap={false}
+          />
+        </div>
 
         {/* ============================================
             REGISTER

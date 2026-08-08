@@ -1,6 +1,5 @@
 "use client";
 
-import { Package } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -60,7 +59,6 @@ export function GearCard({ gear, variant = "customer" }: GearCardProps) {
           </div>
 
           <div className="flex items-center gap-1 text-muted-foreground">
-            <Package className="h-4 w-4" />
             <span>{gear.stock}</span>
           </div>
         </div>

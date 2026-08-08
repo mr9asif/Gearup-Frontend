@@ -25,7 +25,7 @@ export default function RentPage() {
   }
 
   return (
-    <div className="bg-muted/20 min-h-screen">
+    <div className="bg-muted/20 min-h-screen mt-12">
       <div className="container mx-auto max-w-7xl px-4 py-10">
         <div className="grid gap-10 lg:grid-cols-2">
           <GearPreview gear={gear} />

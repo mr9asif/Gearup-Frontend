@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { AuthInitializer } from "@/features/auth/components/auth-initializer";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import { ThemeProvider } from "@/providers/ThemeProvider";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -30,14 +31,23 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={geist.className}>
-        <ThemeProvider>
-          <ReactQueryProvider>
-            <AuthInitializer />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <GoogleOAuthProvider
+            clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}
+          >
+            <ReactQueryProvider>
+              <AuthInitializer />
 
-            {children}
+              {children}
 
-            <Toaster position="top-right" richColors />
-          </ReactQueryProvider>
+              <Toaster position="top-right" richColors />
+            </ReactQueryProvider>
+          </GoogleOAuthProvider>
         </ThemeProvider>
       </body>
     </html>

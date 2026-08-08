@@ -16,7 +16,7 @@ export function ProcessTabs() {
             onClick={() => setTab("customer")}
             className={`rounded-full px-8 py-3 font-medium transition ${
               tab === "customer"
-                ? "bg-primary text-white shadow"
+                ? "bg-primary text-white shadow dark:bg-white dark:text-black"
                 : "text-muted-foreground"
             }`}
           >
@@ -27,7 +27,7 @@ export function ProcessTabs() {
             onClick={() => setTab("provider")}
             className={`rounded-full px-8 py-3 font-medium transition ${
               tab === "provider"
-                ? "bg-primary text-white shadow"
+                ? "bg-primary text-white shadow dark:bg-white dark:text-black"
                 : "text-muted-foreground"
             }`}
           >

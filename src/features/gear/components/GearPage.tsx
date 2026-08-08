@@ -19,7 +19,6 @@ export function GearPage() {
 
   const [search, setSearch] = useState("");
   const [categoryId, setCategoryId] = useState("");
-  console.log("SELECTED CATEGORY ID:", categoryId);
   const [brand, setBrand] = useState("");
 
   const [minPrice, setMinPrice] = useState("");
@@ -32,14 +31,13 @@ export function GearPage() {
   const [page, setPage] = useState(1);
 
   // 9 gears per page
-  // 3 cards per row on desktop
   const limit = 9;
 
   // =====================================================
   // FETCH GEARS
   // =====================================================
 
-  const { data, isPending, isError } = useGear({
+  const { data, isPending, isError, isFetching } = useGear({
     search,
     category: categoryId,
     brand,
@@ -50,15 +48,23 @@ export function GearPage() {
   });
 
   // =====================================================
-  // IMPORTANT
+  // PAGINATED DATA
   //
   // API RESPONSE:
   //
-  // data
-  // └── data
-  //     ├── meta
-  //     └── data
-  //
+  // {
+  //   success: true,
+  //   message: "...",
+  //   data: {
+  //     meta: {
+  //       page: 1,
+  //       limit: 9,
+  //       total: 13,
+  //       totalPage: 2
+  //     },
+  //     data: [...]
+  //   }
+  // }
   // =====================================================
 
   const paginatedData = data?.data;
@@ -118,6 +124,7 @@ export function GearPage() {
     setMinPrice("");
     setMaxPrice("");
 
+    // Always return to first page
     setPage(1);
   };
 
@@ -131,7 +138,7 @@ export function GearPage() {
           BROWSE HEADER + SEARCH
       ===================================================== */}
 
-      <section className="h-[145px] border-b border-border/60 bg-background/95 backdrop-blur-xl">
+      <section className="h-[145px]  border-border/60 bg-background/95 backdrop-blur-xl">
         <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
           {/* Heading */}
           <div className="flex flex-col items-center text-center">
@@ -161,7 +168,7 @@ export function GearPage() {
           MAIN CONTENT
       ===================================================== */}
 
-      <div className="mx-auto h-[calc(100dvh-145px)] max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto h-[calc(100dvh-145px-8px)] max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid h-full gap-6 lg:grid-cols-[250px_minmax(0,1fr)] lg:gap-8">
           {/* =================================================
               DESKTOP FILTER
@@ -263,18 +270,25 @@ export function GearPage() {
             </div>
 
             {/* =================================================
-                ONLY GEAR AREA SCROLLS
+                GEAR AREA
+                ONLY THIS AREA SCROLLS
             ================================================= */}
 
-            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pr-2 pb-0">
-              {/* Loading */}
+            <div className="relative min-h-0 flex-1 overflow-y-auto overscroll-contain pr-2 pb-2">
+              {/* =================================================
+                  INITIAL LOADING
+              ================================================= */}
+
               {isPending && (
                 <div className="flex min-h-[400px] items-center justify-center">
                   <AppLoader />
                 </div>
               )}
 
-              {/* Error */}
+              {/* =================================================
+                  ERROR
+              ================================================= */}
+
               {isError && (
                 <div className="rounded-2xl border border-destructive/20 bg-destructive/5 py-20 text-center">
                   <p className="font-medium text-destructive">
@@ -287,21 +301,40 @@ export function GearPage() {
                 </div>
               )}
 
-              {/* Gear Grid */}
-              {!isPending && !isError && <GearGrid gears={gears} />}
+              {/* =================================================
+                  GEAR GRID
+              ================================================= */}
+
+              {!isPending && !isError && (
+                <div className="relative">
+                  <GearGrid gears={gears} />
+
+                  {/* 
+                    This loader appears when changing page/filter,
+                    but the pagination remains visible below.
+                  */}
+                  {isFetching && (
+                    <div className="absolute inset-0 z-20 flex items-center justify-center rounded-xl bg-background/60 backdrop-blur-[2px]">
+                      <AppLoader />
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* =================================================
                 PAGINATION
             ================================================= */}
 
-            {!isPending && !isError && totalPages > 1 && (
-              <div className="shrink-0 bg-background px-2 py-1">
-                <div className="flex justify-center">
+            {!isError && totalPages > 1 && (
+              <div className="shrink-0 bg-background px-2 pt-1 pb-6">
+                <div className="flex h-10 items-center justify-center">
                   <Pagination
                     currentPage={page}
                     totalPages={totalPages}
-                    onPageChange={setPage}
+                    onPageChange={(newPage) => {
+                      setPage(newPage);
+                    }}
                   />
                 </div>
               </div>

@@ -1,4 +1,5 @@
 import { CategoriesSection } from "@/features/home/components/CategoriesSection";
+import { ContactSection } from "@/features/home/components/ContactSection";
 import { FAQSection } from "@/features/home/components/FAQSection";
 import { FeaturedGearSection } from "@/features/home/components/FeaturedGearSection";
 import { HeroSection } from "@/features/home/components/HeroSection";
@@ -18,6 +19,7 @@ export default function HomePage() {
       <WhyChooseSection />
       <TestimonialsSection />
       <FAQSection />
+      <ContactSection />
       <Footer />
     </>
   );

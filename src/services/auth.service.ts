@@ -26,6 +26,17 @@ export const authService = {
 
     return data;
   },
+  googleLogin: async (idToken: string) => {
+    const { data } = await axiosInstance.post<
+      ApiResponse<{
+        user: AuthUser;
+      }>
+    >("/auth/google", {
+      idToken,
+    });
+
+    return data;
+  },
 
   getMe: async () => {
     const { data } = await axiosInstance.get<ApiResponse<AuthUser>>("/auth/me");

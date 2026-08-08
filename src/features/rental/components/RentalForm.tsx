@@ -13,6 +13,7 @@ import RentalDatePicker from "./RentalDatePicker";
 import SubmitRentalButton from "./SubmitRentalButton";
 
 import { getErrorMessage } from "@/lib/getErrorMessage";
+import { Navbar } from "@/shared/layout/navbar";
 import { useCreateRental } from "../hooks/useCreateRental";
 import { rentalSchema, RentalSchema } from "../schema/rental.schema";
 import RentalSummary from "./RentalSummery";
@@ -81,71 +82,74 @@ export default function RentalForm({
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="space-y-6 rounded-2xl border bg-white p-6 shadow-sm"
-    >
-      <div>
-        <h2 className="text-2xl font-bold">Rent This Gear</h2>
+    <>
+      <Navbar />
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="space-y-6 rounded-2xl border bg-white p-6 shadow-sm "
+      >
+        <div>
+          <h2 className="text-2xl font-bold">Rent This Gear</h2>
 
-        <p className="text-muted-foreground">Fill in your rental details.</p>
-      </div>
+          <p className="text-muted-foreground">Fill in your rental details.</p>
+        </div>
 
-      <QuantitySelector
-        quantity={quantity}
-        stock={stock}
-        onChange={(value) => {
-          setQuantity(value);
-          setValue("quantity", value);
-        }}
-        error={errors.quantity?.message}
-      />
+        <QuantitySelector
+          quantity={quantity}
+          stock={stock}
+          onChange={(value) => {
+            setQuantity(value);
+            setValue("quantity", value);
+          }}
+          error={errors.quantity?.message}
+        />
 
-      <RentalDatePicker
-        label="Start Date"
-        value={startDate}
-        onChange={(date) => {
-          setStartDate(date);
+        <RentalDatePicker
+          label="Start Date"
+          value={startDate}
+          onChange={(date) => {
+            setStartDate(date);
 
-          if (date) {
-            setValue("startDate", date);
-          }
-        }}
-        error={errors.startDate?.message}
-        disabled={(date) => {
-          const today = new Date();
+            if (date) {
+              setValue("startDate", date);
+            }
+          }}
+          error={errors.startDate?.message}
+          disabled={(date) => {
+            const today = new Date();
 
-          today.setHours(0, 0, 0, 0);
+            today.setHours(0, 0, 0, 0);
 
-          return date < today;
-        }}
-      />
+            return date < today;
+          }}
+        />
 
-      <RentalDatePicker
-        label="End Date"
-        value={endDate}
-        onChange={(date) => {
-          setEndDate(date);
+        <RentalDatePicker
+          label="End Date"
+          value={endDate}
+          onChange={(date) => {
+            setEndDate(date);
 
-          if (date) {
-            setValue("endDate", date);
-          }
-        }}
-        error={errors.endDate?.message}
-        disabled={(date) => {
-          if (!startDate) return true;
+            if (date) {
+              setValue("endDate", date);
+            }
+          }}
+          error={errors.endDate?.message}
+          disabled={(date) => {
+            if (!startDate) return true;
 
-          return date <= startDate;
-        }}
-      />
+            return date <= startDate;
+          }}
+        />
 
-      <RentalSummary
-        pricePerDay={pricePerDay}
-        quantity={quantity}
-        totalDays={totalDays}
-      />
+        <RentalSummary
+          pricePerDay={pricePerDay}
+          quantity={quantity}
+          totalDays={totalDays}
+        />
 
-      <SubmitRentalButton isPending={createRental.isPending} />
-    </form>
+        <SubmitRentalButton isPending={createRental.isPending} />
+      </form>
+    </>
   );
 }

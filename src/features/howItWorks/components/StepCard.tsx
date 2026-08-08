@@ -14,10 +14,23 @@ export function StepCard({ step, title, description, icon: Icon }: Props) {
         {step}
       </div>
 
-      <div className="mt-8 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 transition group-hover:bg-primary group-hover:text-white">
+      <div
+        className="
+    mt-8 flex h-16 w-16 items-center justify-center rounded-2xl
+    bg-primary/10
+    text-foreground
+    transition-colors
+    group-hover:bg-primary
+    group-hover:text-white
+
+    dark:bg-black
+    dark:text-white
+    dark:group-hover:bg-white
+    dark:group-hover:text-black
+  "
+      >
         <Icon className="h-8 w-8" />
       </div>
-
       <h3 className="mt-6 text-xl font-semibold">{title}</h3>
 
       <p className="mt-3 text-muted-foreground">{description}</p>

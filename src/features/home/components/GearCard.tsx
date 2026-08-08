@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { ArrowRight, Heart, MapPin, Star } from "lucide-react";
+import { ArrowRight, MapPin, Star } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Gear } from "../types/home.types";
@@ -42,9 +42,9 @@ export default function GearCard({
         </div>
 
         {/* Wishlist */}
-        <button className="absolute right-4 top-4 rounded-full bg-background/90 p-2 backdrop-blur transition hover:scale-110">
+        {/* <button className="absolute right-4 top-4 rounded-full bg-background/90 p-2 backdrop-blur transition hover:scale-110">
           <Heart className="h-4 w-4" />
-        </button>
+        </button> */}
       </div>
 
       {/* Content */}
